@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="toolbar_text">16sp</dimen>
+
+    <dimen name="size_005">4dp</dimen>
+    <dimen name="size_01">8dp</dimen>
+    <dimen name="size_02">16dp</dimen>
+    <dimen name="size_03">24dp</dimen>
+    <dimen name="size_04">32dp</dimen>
+    <dimen name="size_05">40dp</dimen>
+    <dimen name="size_06">48dp</dimen>
+    <dimen name="size_07">56dp</dimen>
+    <dimen name="size_08">64dp</dimen>
+    <dimen name="size_09">72dp</dimen>
+    <dimen name="size_12">96dp</dimen>
+    <dimen name="size_13">104dp</dimen>
+    <dimen name="size_16">128dp</dimen>
+    <dimen name="size_24">192dp</dimen>
+    <dimen name="size_28">224dp</dimen>
+    <dimen name="size_32">256dp</dimen>
+</resources>

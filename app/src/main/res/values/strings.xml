@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Pirate Sheep</string>
+    <string name="main_first_name">First Name</string>
+    <string name="main_last_name">Last Name</string>
+    <string name="main_birthday">Birthday</string>
+    <string name="main_birth_place">Birth place</string>
+    <string name="main_address">Address</string>
+    <string name="main_city">City</string>
+    <string name="main_reason">Pretext</string>
+    <string name="main_place">Done in</string>
+    <string name="main_date">Date</string>
+    <string name="main_time">Time</string>
+</resources>

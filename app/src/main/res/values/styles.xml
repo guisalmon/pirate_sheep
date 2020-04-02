@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+
+    <style name="Text"/>
+
+    <style name="Text.Toolbar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/size_02</item>
+        <item name="android:layout_marginEnd">@dimen/size_02</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/toolbar_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="Text.Label">
+        <item name="android:layout_height">@dimen/size_06</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingEnd">@dimen/size_02</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="Text.Edit">
+        <item name="android:layout_height">@dimen/size_06</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+</resources>
