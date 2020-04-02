@@ -10,4 +10,6 @@
     <string name="main_place">Done in</string>
     <string name="main_date">Date</string>
     <string name="main_time">Time</string>
+    <string name="date_template">%d/%d/%d</string>
+    <string name="time_template">%d:%d</string>
 </resources>

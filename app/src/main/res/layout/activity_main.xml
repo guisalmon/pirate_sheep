@@ -140,7 +140,7 @@
             app:layout_constraintTop_toBottomOf="@id/main_first_name_edit"
             android:inputType="textCapWords" />
 
-        <TextView
+        <Button
             style="@style/Text.Edit"
             android:id="@+id/main_birthday_edit"
             android:text="@string/main_birthday"
@@ -198,17 +198,17 @@
             app:layout_constraintTop_toBottomOf="@id/main_reason_edit"
             android:inputType="textCapWords" />
 
-        <TextView
+        <Button
             style="@style/Text.Edit"
             android:id="@+id/main_date_edit"
-            android:text="@string/main_birthday"
+            android:text="@string/main_date"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintStart_toStartOf="@id/separator"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
             app:layout_constraintTop_toBottomOf="@+id/main_place_edit" />
 
-        <TextView
+        <Button
             style="@style/Text.Edit"
             android:id="@+id/main_time_edit"
             android:text="@string/main_time"
