@@ -43,7 +43,7 @@ abstract class BaseViewModel<D : BaseData> : ViewModel() {
     fun registerObserver(owner: LifecycleOwner, observer: Observer<D>) =
         data.observe(owner, observer)
 
-    fun update(copy: (D) -> D) {
+    open fun update(copy: (D) -> D) {
         data.value?.let {
             data.value = copy(it)
         } ?: Log.e(javaClass.simpleName, "Attempt to update uninitialized data")

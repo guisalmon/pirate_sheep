@@ -2,6 +2,7 @@ package org.robnetwork.piratesheep.ui
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.Spinner
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
 import java.util.*
@@ -21,6 +23,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     override fun setupUI(binding: ActivityMainBinding) {
         super.setupUI(binding)
+
+        viewModel.loadData(this) {
+            binding.firstNameEdit.setText(it.firstName)
+            binding.lastNameEdit.setText(it.lastName)
+            binding.birthPlaceEdit.setText(it.birthPlace)
+            binding.addressEdit.setText(it.address)
+            binding.cityEdit.setText(it.city)
+            binding.placeEdit.setText(it.place)
+        }
 
         val cal = Calendar.getInstance()
         setupBirthday(binding.birthdayEdit, cal)
@@ -42,6 +53,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             it.timeEdit.text = data.time
             it.qrcodeFab.isClickable = data.isValid()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.storeData(this)
     }
 
     private fun setupBirthday(birthdayBtn: Button, cal: Calendar) {
@@ -167,7 +183,54 @@ data class MainData(
     val place: String? = null,
     val date: String? = null,
     val time: String? = null
-) : BaseData
+) : BaseData {
+    companion object {
+        const val firstNameKey: String = "firstName"
+        const val lastNameKey: String = "lastName"
+        const val birthdayKey: String = "birthday"
+        const val birthPlaceKey: String = "birthPlace"
+        const val addressKey: String = "address"
+        const val cityKey: String = "city"
+        const val reasonKey: String = "reason"
+        const val placeKey: String = "place"
+    }
+}
 
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
-    BaseViewModel<MainData>()
+    BaseViewModel<MainData>() {
+
+    fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) {
+        val initialData =
+            PreferenceManager.getDefaultSharedPreferences(context.applicationContext).let {
+                MainData(
+                    it.getString(MainData.firstNameKey, null),
+                    it.getString(MainData.lastNameKey, null),
+                    it.getString(MainData.birthdayKey, null),
+                    it.getString(MainData.birthPlaceKey, null),
+                    it.getString(MainData.addressKey, null),
+                    it.getString(MainData.cityKey, null),
+                    it.getString(MainData.reasonKey, null),
+                    it.getString(MainData.placeKey, null),
+                    null,
+                    null
+                )
+            }
+        data.value = initialData
+        onDataLoadedListener(initialData)
+    }
+
+    fun storeData(context: Context) {
+        data.value?.let {
+            PreferenceManager.getDefaultSharedPreferences(context.applicationContext).edit()
+                .putString(MainData.firstNameKey, it.firstName)
+                .putString(MainData.lastNameKey, it.lastName)
+                .putString(MainData.birthdayKey, it.birthday)
+                .putString(MainData.birthPlaceKey, it.birthPlace)
+                .putString(MainData.addressKey, it.address)
+                .putString(MainData.cityKey, it.city)
+                .putString(MainData.reasonKey, it.reason)
+                .putString(MainData.placeKey, it.place)
+                .apply()
+        }
+    }
+}
