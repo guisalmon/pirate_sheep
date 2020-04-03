@@ -24,7 +24,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
     override fun setupUI(binding: ActivityMainBinding) {
         super.setupUI(binding)
 
+        val cal = Calendar.getInstance()
+
         viewModel.loadData(this) {
+            setupBirthday(binding.birthdayEdit, cal)
+            setupDate(binding.dateEdit, cal)
+            setupTime(binding.timeEdit, cal)
+            setupReason(binding.reasonEdit, it.reason)
             binding.firstNameEdit.setText(it.firstName)
             binding.lastNameEdit.setText(it.lastName)
             binding.birthPlaceEdit.setText(it.birthPlace)
@@ -33,11 +39,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             binding.placeEdit.setText(it.place)
         }
 
-        val cal = Calendar.getInstance()
-        setupBirthday(binding.birthdayEdit, cal)
-        setupDate(binding.dateEdit, cal)
-        setupTime(binding.timeEdit, cal)
-        setupReason(binding.reasonEdit)
         binding.firstNameEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(firstName = t.nullIfEmpty()) } }
         binding.lastNameEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(lastName = t.nullIfEmpty()) } }
         binding.birthPlaceEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(birthPlace = t.nullIfEmpty()) } }
@@ -102,7 +103,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         )
     }
 
-    private fun setupReason(reasonSpinner: Spinner) {
+    private fun setupReason(reasonSpinner: Spinner, reason: String?) {
         val reasonsList = resources.getStringArray(R.array.reasons_array).toList()
         ArrayAdapter(
             this,
@@ -112,6 +113,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             reasonSpinner.adapter = it
         }
+
+        reasonSpinner.setSelection(reasonsList.indexOf(reason).let { if (it == -1) 0 else it })
+
         reasonSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) =
                 viewModel.update { it.copy(reason = null) }
