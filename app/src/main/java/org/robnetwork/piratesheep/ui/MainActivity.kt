@@ -189,14 +189,14 @@ data class MainData(
     val time: String? = null
 ) : BaseData {
     companion object {
-        const val firstNameKey: String = "firstName"
-        const val lastNameKey: String = "lastName"
-        const val birthdayKey: String = "birthday"
-        const val birthPlaceKey: String = "birthPlace"
-        const val addressKey: String = "address"
-        const val cityKey: String = "city"
-        const val reasonKey: String = "reason"
-        const val placeKey: String = "place"
+        const val FIRSTNAME: String = "firstName"
+        const val LASTNAME: String = "lastName"
+        const val BIRTHDAY: String = "birthday"
+        const val BIRTH_PLACE: String = "birthPlace"
+        const val ADDRESS: String = "address"
+        const val CITY: String = "city"
+        const val REASON: String = "reason"
+        const val PLACE: String = "place"
     }
 }
 
@@ -207,14 +207,14 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
         val initialData =
             PreferenceManager.getDefaultSharedPreferences(context.applicationContext).let {
                 MainData(
-                    it.getString(MainData.firstNameKey, null),
-                    it.getString(MainData.lastNameKey, null),
-                    it.getString(MainData.birthdayKey, null),
-                    it.getString(MainData.birthPlaceKey, null),
-                    it.getString(MainData.addressKey, null),
-                    it.getString(MainData.cityKey, null),
-                    it.getString(MainData.reasonKey, null),
-                    it.getString(MainData.placeKey, null),
+                    it.getString(MainData.FIRSTNAME, null),
+                    it.getString(MainData.LASTNAME, null),
+                    it.getString(MainData.BIRTHDAY, null),
+                    it.getString(MainData.BIRTH_PLACE, null),
+                    it.getString(MainData.ADDRESS, null),
+                    it.getString(MainData.CITY, null),
+                    it.getString(MainData.REASON, null),
+                    it.getString(MainData.PLACE, null),
                     null,
                     null
                 )
@@ -226,14 +226,14 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
     fun storeData(context: Context) {
         data.value?.let {
             PreferenceManager.getDefaultSharedPreferences(context.applicationContext).edit()
-                .putString(MainData.firstNameKey, it.firstName)
-                .putString(MainData.lastNameKey, it.lastName)
-                .putString(MainData.birthdayKey, it.birthday)
-                .putString(MainData.birthPlaceKey, it.birthPlace)
-                .putString(MainData.addressKey, it.address)
-                .putString(MainData.cityKey, it.city)
-                .putString(MainData.reasonKey, it.reason)
-                .putString(MainData.placeKey, it.place)
+                .putString(MainData.FIRSTNAME, it.firstName)
+                .putString(MainData.LASTNAME, it.lastName)
+                .putString(MainData.BIRTHDAY, it.birthday)
+                .putString(MainData.BIRTH_PLACE, it.birthPlace)
+                .putString(MainData.ADDRESS, it.address)
+                .putString(MainData.CITY, it.city)
+                .putString(MainData.REASON, it.reason)
+                .putString(MainData.PLACE, it.place)
                 .apply()
         }
     }
