@@ -3,7 +3,12 @@ package org.robnetwork.piratesheep.ui
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Spinner
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
@@ -16,52 +21,91 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     override fun setupUI(binding: ActivityMainBinding) {
         super.setupUI(binding)
-        val cal = Calendar.getInstance()
 
-        binding.mainBirthdayEdit.setOnClickListener(
-            showDatePicker(
-                cal,
-                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    viewModel.updateBirthday(dateString(dayOfMonth, month + 1, year))
-                })
-        )
-        viewModel.updateDate(
-            dateString(
-                cal.get(Calendar.DAY_OF_MONTH),
-                cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.YEAR)
-            )
-        )
-        binding.mainDateEdit.setOnClickListener(
-            showDatePicker(
-                cal,
-                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    viewModel.updateDate(dateString(dayOfMonth, month + 1, year))
-                })
-        )
-        viewModel.updateTime(timeString(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE)))
-        binding.mainTimeEdit.setOnClickListener(
-            showTimePicker(
-                cal,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    viewModel.updateTime(timeString(hourOfDay, minute))
-                })
-        )
-        ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            resources.getStringArray(R.array.reasons_array).toList()
-        ).also {
-            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.mainReasonEdit.adapter = it
-        }
+        val cal = Calendar.getInstance()
+        setupBirthday(binding.birthdayEdit, cal)
+        setupDate(binding.dateEdit, cal)
+        setupTime(binding.timeEdit, cal)
+        setupReason(binding.reasonEdit)
+        binding.firstNameEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(firstName = t.nullIfEmpty()) } }
+        binding.lastNameEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(lastName = t.nullIfEmpty()) } }
+        binding.birthPlaceEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(birthPlace = t.nullIfEmpty()) } }
+        binding.addressEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(address = t.nullIfEmpty()) } }
+        binding.cityEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(city = t.nullIfEmpty()) } }
+        binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
     }
 
     override fun updateUI(data: MainData) {
         binding?.let {
-            it.mainBirthdayEdit.text = data.birthday
-            it.mainDateEdit.text = data.date
-            it.mainTimeEdit.text = data.time
+            it.birthdayEdit.text = data.birthday
+            it.dateEdit.text = data.date
+            it.timeEdit.text = data.time
+            it.qrcodeFab.isClickable = data.isValid()
+        }
+    }
+
+    private fun setupBirthday(birthdayBtn: Button, cal: Calendar) {
+        birthdayBtn.setOnClickListener(
+            showDatePicker(
+                cal,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    viewModel.update { it.copy(birthday = dateString(dayOfMonth, month + 1, year)) }
+                })
+        )
+    }
+
+    private fun setupDate(dateBtn: Button, cal: Calendar) {
+        viewModel.update {
+            it.copy(
+                date = dateString(
+                    cal.get(Calendar.DAY_OF_MONTH),
+                    cal.get(Calendar.MONTH) + 1,
+                    cal.get(Calendar.YEAR)
+                )
+            )
+        }
+        dateBtn.setOnClickListener(
+            showDatePicker(
+                cal,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    viewModel.update { it.copy(date = dateString(dayOfMonth, month + 1, year)) }
+                })
+        )
+    }
+
+    private fun setupTime(timeBtn: Button, cal: Calendar) {
+        viewModel.update {
+            it.copy(time = timeString(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE)))
+        }
+        timeBtn.setOnClickListener(
+            showTimePicker(
+                cal,
+                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    viewModel.update { it.copy(time = timeString(hourOfDay, minute)) }
+                })
+        )
+    }
+
+    private fun setupReason(reasonSpinner: Spinner) {
+        val reasonsList = resources.getStringArray(R.array.reasons_array).toList()
+        ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            reasonsList
+        ).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            reasonSpinner.adapter = it
+        }
+        reasonSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) =
+                viewModel.update { it.copy(reason = null) }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) = viewModel.update { it.copy(reason = reasonsList[position]) }
         }
     }
 
@@ -96,6 +140,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     private fun timeString(hour: Int, minutes: Int) =
         getString(R.string.time_template, hour, minutes)
+
+    private fun CharSequence?.nullIfEmpty() = if (isNullOrEmpty()) null else toString()
+
+    private fun MainData.isValid() =
+        firstName != null
+                && lastName != null
+                && birthday != null
+                && birthPlace != null
+                && address != null
+                && city != null
+                && reason != null
+                && place != null
+                && date != null
+                && time != null
 }
 
 data class MainData(
@@ -111,18 +169,5 @@ data class MainData(
     val time: String? = null
 ) : BaseData
 
-class MainViewModel : BaseViewModel<MainData>() {
-    override val data = MutableLiveData(MainData())
-
-    fun updateBirthday(birthday: String) = data.value?.let {
-        data.value = it.copy(birthday = birthday)
-    }
-
-    fun updateDate(date: String) = data.value?.let {
-        data.value = it.copy(date = date)
-    }
-
-    fun updateTime(time: String) = data.value?.let {
-        data.value = it.copy(time = time)
-    }
-}
+class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
+    BaseViewModel<MainData>()

@@ -1,15 +1,13 @@
 package org.robnetwork.piratesheep.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 
 abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewModel<D>> :
     AppCompatActivity() {
@@ -31,12 +29,7 @@ abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
     @CallSuper
     protected open fun setupUI(binding: B) {
         this.binding = binding
-        viewModel.data.observe(
-            this,
-            Observer {
-                updateUI(it)
-            }
-        )
+        viewModel.registerObserver(this, Observer { updateUI(it) })
     }
 
     abstract fun updateUI(data: D)
@@ -45,5 +38,14 @@ abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
 interface BaseData
 
 abstract class BaseViewModel<D : BaseData> : ViewModel() {
-    abstract val data: MutableLiveData<D>
+    protected abstract val data: MutableLiveData<D>
+
+    fun registerObserver(owner: LifecycleOwner, observer: Observer<D>) =
+        data.observe(owner, observer)
+
+    fun update(copy: (D) -> D) {
+        data.value?.let {
+            data.value = copy(it)
+        } ?: Log.e(javaClass.simpleName, "Attempt to update uninitialized data")
+    }
 }

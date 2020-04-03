@@ -20,6 +20,13 @@
             app:layout_constraintGuide_begin="@dimen/size_09" />
 
         <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/marginBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/size_02" />
+
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/marginStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,182 +48,198 @@
             app:layout_constraintGuide_begin="@dimen/size_16" />
 
         <TextView
+            android:id="@+id/first_name_label"
             style="@style/Text.Label"
-            android:id="@+id/main_first_name_label"
             android:text="@string/main_first_name"
-            app:layout_constraintTop_toBottomOf="@id/marginTop"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/marginTop" />
 
         <TextView
+            android:id="@+id/last_name_label"
             style="@style/Text.Label"
-            android:id="@+id/main_last_name_label"
             android:text="@string/main_last_name"
-            app:layout_constraintTop_toBottomOf="@id/main_first_name_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/first_name_label" />
 
         <TextView
+            android:id="@+id/birthday_label"
             style="@style/Text.Label"
-            android:id="@+id/main_birthday_label"
             android:text="@string/main_birthday"
-            app:layout_constraintTop_toBottomOf="@id/main_last_name_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/last_name_label" />
 
         <TextView
+            android:id="@+id/birth_place_label"
             style="@style/Text.Label"
-            android:id="@+id/main_birth_place_label"
             android:text="@string/main_birth_place"
-            app:layout_constraintTop_toBottomOf="@id/main_birthday_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/birthday_label" />
 
         <TextView
+            android:id="@+id/address_label"
             style="@style/Text.Label"
-            android:id="@+id/main_address_label"
             android:text="@string/main_address"
-            app:layout_constraintTop_toBottomOf="@id/main_birth_place_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/birth_place_label" />
 
         <TextView
+            android:id="@+id/city_label"
             style="@style/Text.Label"
-            android:id="@+id/main_city_label"
             android:text="@string/main_city"
-            app:layout_constraintTop_toBottomOf="@id/main_address_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/address_label" />
 
         <TextView
+            android:id="@+id/reason_label"
             style="@style/Text.Label"
-            android:id="@+id/main_reason_label"
             android:text="@string/main_reason"
-            app:layout_constraintTop_toBottomOf="@id/main_city_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/city_label" />
 
         <TextView
+            android:id="@+id/place_label"
             style="@style/Text.Label"
-            android:id="@+id/main_place_label"
             android:text="@string/main_place"
-            app:layout_constraintTop_toBottomOf="@id/main_reason_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/reason_label" />
 
         <TextView
+            android:id="@+id/date_label"
             style="@style/Text.Label"
-            android:id="@+id/main_date_label"
             android:text="@string/main_date"
-            app:layout_constraintTop_toBottomOf="@id/main_place_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/place_label" />
 
         <TextView
+            android:id="@+id/time_label"
             style="@style/Text.Label"
-            android:id="@+id/main_time_label"
             android:text="@string/main_time"
-            app:layout_constraintTop_toBottomOf="@id/main_date_label"
             app:layout_constraintEnd_toStartOf="@+id/separator"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"/>
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/date_label" />
 
         <EditText
+            android:id="@+id/first_name_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_first_name_edit"
+            android:autofillHints=""
             android:hint="@string/main_first_name"
-            android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/marginTop"
-            android:inputType="textCapWords" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/marginTop" />
 
         <EditText
+            android:id="@+id/last_name_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_last_name_edit"
-            android:hint="@string/main_last_name"
             android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:hint="@string/main_last_name"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/main_first_name_edit"
-            android:inputType="textCapWords" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/first_name_edit" />
 
         <Button
+            android:id="@+id/birthday_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_birthday_edit"
-            android:text="@string/main_birthday"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:text="@string/main_birthday"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@+id/main_last_name_edit" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@+id/last_name_edit" />
 
         <EditText
+            android:id="@+id/birth_place_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_birth_place_edit"
+            android:autofillHints=""
             android:hint="@string/main_birth_place"
-            android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/main_birthday_edit"
-            android:inputType="textCapWords" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/birthday_edit" />
 
         <EditText
+            android:id="@+id/address_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_address_edit"
+            android:autofillHints=""
             android:hint="@string/main_address"
-            android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:inputType="textPostalAddress"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/main_birth_place_edit"
-            android:inputType="textPostalAddress" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/birth_place_edit" />
 
         <EditText
+            android:id="@+id/city_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_city_edit"
-            android:hint="@string/main_city"
             android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:hint="@string/main_city"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/main_address_edit"
-            android:inputType="textCapWords" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/address_edit" />
 
         <Spinner
-            android:layout_height="@dimen/size_06"
+            android:id="@+id/reason_edit"
             android:layout_width="0dp"
-            android:id="@+id/main_reason_edit"
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:layout_height="@dimen/size_06"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@+id/main_city_edit"/>
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@+id/city_edit" />
 
         <EditText
+            android:id="@+id/place_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_place_edit"
-            android:hint="@string/main_place"
             android:autofillHints=""
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:hint="@string/main_place"
+            android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@id/main_reason_edit"
-            android:inputType="textCapWords" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/reason_edit" />
 
         <Button
+            android:id="@+id/date_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_date_edit"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/main_date"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="@id/separator"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@+id/main_place_edit" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@+id/place_edit" />
 
         <Button
+            android:id="@+id/time_edit"
             style="@style/Text.Edit"
-            android:id="@+id/main_time_edit"
-            android:text="@string/main_time"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintStart_toStartOf="@id/separator"
+            android:text="@string/main_time"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
-            app:layout_constraintTop_toBottomOf="@+id/main_date_edit" />
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@+id/date_edit" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_07"
+            app:layout_constraintTop_toBottomOf="@+id/time_edit" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/qrcode_fab"
+            android:layout_width="@dimen/size_07"
+            android:layout_height="@dimen/size_07"
+            android:focusable="true"
+            android:src="@drawable/qrcode"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/marginBottom"
+            app:layout_constraintEnd_toEndOf="@+id/marginEnd" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
