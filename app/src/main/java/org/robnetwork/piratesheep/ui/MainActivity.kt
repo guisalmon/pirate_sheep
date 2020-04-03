@@ -11,9 +11,9 @@ import android.widget.Button
 import android.widget.Spinner
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
+import org.robnetwork.piratesheep.model.MainData
 import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>() {
@@ -176,65 +176,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
                 && time != null
 }
 
-data class MainData(
-    val firstName: String? = null,
-    val lastName: String? = null,
-    val birthday: String? = null,
-    val birthPlace: String? = null,
-    val address: String? = null,
-    val city: String? = null,
-    val reason: String? = null,
-    val place: String? = null,
-    val date: String? = null,
-    val time: String? = null
-) : BaseData {
-    companion object {
-        const val FIRSTNAME: String = "firstName"
-        const val LASTNAME: String = "lastName"
-        const val BIRTHDAY: String = "birthday"
-        const val BIRTH_PLACE: String = "birthPlace"
-        const val ADDRESS: String = "address"
-        const val CITY: String = "city"
-        const val REASON: String = "reason"
-        const val PLACE: String = "place"
-    }
-}
-
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
     BaseViewModel<MainData>() {
 
-    fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) {
-        val initialData =
-            PreferenceManager.getDefaultSharedPreferences(context.applicationContext).let {
-                MainData(
-                    it.getString(MainData.FIRSTNAME, null),
-                    it.getString(MainData.LASTNAME, null),
-                    it.getString(MainData.BIRTHDAY, null),
-                    it.getString(MainData.BIRTH_PLACE, null),
-                    it.getString(MainData.ADDRESS, null),
-                    it.getString(MainData.CITY, null),
-                    it.getString(MainData.REASON, null),
-                    it.getString(MainData.PLACE, null),
-                    null,
-                    null
-                )
-            }
-        data.value = initialData
-        onDataLoadedListener(initialData)
-    }
-
-    fun storeData(context: Context) {
-        data.value?.let {
-            PreferenceManager.getDefaultSharedPreferences(context.applicationContext).edit()
-                .putString(MainData.FIRSTNAME, it.firstName)
-                .putString(MainData.LASTNAME, it.lastName)
-                .putString(MainData.BIRTHDAY, it.birthday)
-                .putString(MainData.BIRTH_PLACE, it.birthPlace)
-                .putString(MainData.ADDRESS, it.address)
-                .putString(MainData.CITY, it.city)
-                .putString(MainData.REASON, it.reason)
-                .putString(MainData.PLACE, it.place)
-                .apply()
+    fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) =
+        MainData.loadData(context) {
+            data.value = it
+            onDataLoadedListener(it)
         }
-    }
+
+    fun storeData(context: Context) = data.value?.let { MainData.storeData(context, it) }
 }
