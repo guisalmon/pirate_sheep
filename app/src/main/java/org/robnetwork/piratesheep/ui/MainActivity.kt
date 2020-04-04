@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
 import org.robnetwork.piratesheep.model.MainData
+import org.robnetwork.piratesheep.utils.ImageUtils
 import org.robnetwork.piratesheep.utils.QRGeneratorUtil
 import java.util.*
 
@@ -52,14 +53,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
                 binding.qrcodeOverlay.visibility = View.VISIBLE
                 binding.qrcodeView.visibility = View.VISIBLE
                 binding.qrcodeView.setImageBitmap(it)
+                binding.formView.visibility = View.VISIBLE
+                binding.formView.setImageBitmap(viewModel.formBitmap)
             }
         }
         binding.qrcodeOverlay.setOnClickListener {
             binding.qrcodeOverlay.visibility = View.GONE
             binding.qrcodeView.visibility = View.GONE
         }
+        binding.formView.setOnClickListener {
+            binding.formView.visibility = View.GONE
+        }
         binding.qrcodeOverlay.visibility = View.GONE
         binding.qrcodeView.visibility = View.GONE
+        binding.formView.visibility = View.GONE
     }
 
     override fun updateUI(data: MainData) {
@@ -201,10 +208,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
     BaseViewModel<MainData>() {
+    var formBitmap: Bitmap? = null
 
     fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) =
         MainData.loadData(context) {
             data.value = it
+            context.getDrawable(R.drawable.attestation_deplacement_empty)?.let { formDrawable ->
+                ImageUtils.drawableToBitmap(formDrawable) { form ->
+                    formBitmap = form
+                }
+            }
             onDataLoadedListener(it)
         }
 
