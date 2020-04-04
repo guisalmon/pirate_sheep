@@ -3,6 +3,7 @@ package org.robnetwork.piratesheep.ui
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -14,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
 import org.robnetwork.piratesheep.model.MainData
+import org.robnetwork.piratesheep.utils.QRGeneratorUtil
 import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>() {
@@ -45,6 +47,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         binding.addressEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(address = t.nullIfEmpty()) } }
         binding.cityEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(city = t.nullIfEmpty()) } }
         binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
+        binding.qrcodeFab.setOnClickListener {
+            viewModel.generateQrCode(this) {
+                binding.qrcodeOverlay.visibility = View.VISIBLE
+                binding.qrcodeView.visibility = View.VISIBLE
+                binding.qrcodeView.setImageBitmap(it)
+            }
+        }
+        binding.qrcodeOverlay.setOnClickListener {
+            binding.qrcodeOverlay.visibility = View.GONE
+            binding.qrcodeView.visibility = View.GONE
+        }
+        binding.qrcodeOverlay.visibility = View.GONE
+        binding.qrcodeView.visibility = View.GONE
     }
 
     override fun updateUI(data: MainData) {
@@ -186,4 +201,25 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
         }
 
     fun storeData(context: Context) = data.value?.let { MainData.storeData(context, it) }
+
+    fun generateQrCode(context: Context, onQRCodeGenerated: (Bitmap) -> Unit) {
+        data.value?.let {
+            QRGeneratorUtil.generateQRCode(
+                context.getString(
+                    R.string.qr_code_template,
+                    it.date,
+                    it.time,
+                    it.firstName,
+                    it.lastName,
+                    it.birthday,
+                    it.birthPlace,
+                    it.address,
+                    it.city,
+                    it.date,
+                    it.time,
+                    it.reason
+                ), onQRCodeGenerated
+            )
+        }
+    }
 }
