@@ -54,7 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
                 binding.qrcodeView.visibility = View.VISIBLE
                 binding.qrcodeView.setImageBitmap(it)
                 binding.formView.visibility = View.VISIBLE
-                binding.formView.setImageBitmap(viewModel.formBitmap)
+                binding.formView.setImageBitmap(viewModel.formBitmap2)
             }
         }
         binding.qrcodeOverlay.setOnClickListener {
@@ -213,12 +213,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
     BaseViewModel<MainData>() {
     var formBitmap: Bitmap? = null
+    var formBitmap2: Bitmap? = null
 
     fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) =
         MainData.loadData(context) {
             data.value = it
             ImageUtils.drawableToBitmap(context, R.drawable.attestation_deplacement_empty) { form ->
                 formBitmap = form
+                formBitmap2 = form?.let {
+                    Bitmap.createBitmap(
+                        form.width,
+                        form.height,
+                        Bitmap.Config.ARGB_8888
+                    )
+                }
             }
             onDataLoadedListener(it)
         }
@@ -255,23 +263,69 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                     it.date,
                     it.time,
                     it.reason
-                ), onQRCodeGenerated
-            )
+                ), 233, density
+            ) { qrCode ->
+                formBitmap?.let { bitmap ->
+                    ImageUtils.writeQrCodeToCanvas(qrCode, bitmap, 873, 1211, density)
+                }
+                formBitmap?.writeTextOnBitmap(
+                    density,
+                    FormField(context.getString(R.string.timestamp_1), 1077, 1441, 14, false)
+                )
+                formBitmap?.writeTextOnBitmap(
+                    density,
+                    FormField(
+                        context.getString(R.string.timestamp_2, it.date, it.time),
+                        1077,
+                        1455,
+                        14,
+                        false
+                    )
+                )
+            }
+            QRGeneratorUtil.generateQRCode(
+                context.getString(
+                    R.string.qr_code_template,
+                    it.date,
+                    it.time,
+                    it.firstName,
+                    it.lastName,
+                    it.birthday,
+                    it.birthPlace,
+                    it.address,
+                    it.city,
+                    it.date,
+                    it.time,
+                    it.reason
+                ), 233, density*3
+            ) { qrCode ->
+                formBitmap2?.let { bitmap ->
+                    ImageUtils.writeQrCodeToCanvas(qrCode, bitmap, 70, 70, density)
+                }
+                onQRCodeGenerated(qrCode)
+            }
         }
     }
 
     private fun Bitmap.writeTextOnBitmap(density: Float, field: FormField) {
-        ImageUtils.writeTextToBitmapAt(field.text, this, field.x, field.y, field.size, density)
+        ImageUtils.writeTextToBitmapAt(
+            field.text,
+            this,
+            field.x,
+            field.y,
+            field.size,
+            density,
+            field.isLeftAligned
+        )
     }
 
     private data class FormField(
         val text: String,
         val x: Int,
         val y: Int,
-        val size: Int
-    ) {
-        constructor(text: String, x: Int, y: Int) : this(text, x, y, 20)
-    }
+        val size: Int = 20,
+        val isLeftAligned: Boolean = true
+    )
 }
 
 private enum class Reasons(val index: Int, val x: Int, val y: Int, @StringRes val textRes: Int) {
@@ -284,6 +338,7 @@ private enum class Reasons(val index: Int, val x: Int, val y: Int, @StringRes va
     TIG(6, 157, 1212, R.string.reason_tig);
 
     fun toReadableText(context: Context) = context.getString(this.textRes)
+
     companion object {
         fun reasonByIndex(index: Int?) = values().firstOrNull { it.index == index }
     }

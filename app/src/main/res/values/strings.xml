@@ -20,4 +20,6 @@
     <string name="reason_leisure">Leisure</string>
     <string name="reason_legal">Legal</string>
     <string name="reason_tig">TIG</string>
+    <string name="timestamp_1">Date de creation:</string>
+    <string name="timestamp_2">%s à %s</string>
 </resources>
