@@ -12,4 +12,5 @@
     <string name="main_time">Time</string>
     <string name="date_template">%d/%d/%d</string>
     <string name="time_template">%d:%d</string>
+    <string name="qr_code_template">Cree le: %s a %s; Nom: %s; Prenom: %s; Naissance: %s a %s; Adresse: %s %s; Sortie: %s a %s; Motif: %s</string>
 </resources>
