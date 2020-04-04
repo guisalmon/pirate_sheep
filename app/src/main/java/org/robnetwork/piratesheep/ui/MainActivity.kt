@@ -107,7 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     private fun setupTime(timeBtn: Button, cal: Calendar) {
         viewModel.update {
-            it.copy(time = timeString(cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE)))
+            it.copy(time = timeString(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)))
         }
         timeBtn.setOnClickListener(
             showTimePicker(
@@ -164,17 +164,26 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         TimePickerDialog(
             this,
             onTimeSetListener,
-            cal.get(Calendar.HOUR),
+            cal.get(Calendar.HOUR_OF_DAY),
             cal.get(Calendar.MINUTE),
             true
         ).show()
     }
 
-    private fun dateString(day: Int, month: Int, year: Int) =
-        getString(R.string.date_template, day, month, year)
+    private fun dateString(day: Int, month: Int, year: Int) = getString(
+        R.string.date_template,
+        day.numberTo2DigitString(),
+        month.numberTo2DigitString(),
+        year.toString()
+    )
 
-    private fun timeString(hour: Int, minutes: Int) =
-        getString(R.string.time_template, hour, minutes)
+    private fun timeString(hour: Int, minutes: Int) = getString(
+        R.string.time_template,
+        hour.numberTo2DigitString(),
+        minutes.numberTo2DigitString()
+    )
+
+    private fun Int.numberTo2DigitString() = if (this < 10) "0$this" else toString()
 
     private fun CharSequence?.nullIfEmpty() = if (isNullOrEmpty()) null else toString()
 

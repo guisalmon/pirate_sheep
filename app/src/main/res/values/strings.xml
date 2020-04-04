@@ -10,7 +10,7 @@
     <string name="main_place">Done in</string>
     <string name="main_date">Date</string>
     <string name="main_time">Time</string>
-    <string name="date_template">%d/%d/%d</string>
-    <string name="time_template">%d:%d</string>
+    <string name="date_template">%s/%s/%s</string>
+    <string name="time_template">%sh%s</string>
     <string name="qr_code_template">Cree le: %s a %s; Nom: %s; Prenom: %s; Naissance: %s a %s; Adresse: %s %s; Sortie: %s a %s; Motif: %s</string>
 </resources>
