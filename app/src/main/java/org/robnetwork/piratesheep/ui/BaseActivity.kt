@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.*
+import org.robnetwork.piratesheep.model.BaseData
 
 abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewModel<D>> :
     AppCompatActivity() {
@@ -34,8 +35,6 @@ abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
 
     abstract fun updateUI(data: D)
 }
-
-interface BaseData
 
 abstract class BaseViewModel<D : BaseData> : ViewModel() {
     protected abstract val data: MutableLiveData<D>
