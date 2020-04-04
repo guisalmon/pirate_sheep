@@ -24,9 +24,15 @@ object ImageUtils {
         return bitmap
     }
 
-    fun writeQrCodeToCanvas(qrCode: Bitmap, bitmap: Bitmap, x: Int, y: Int, scale: Float): Bitmap {
+    fun setBackgroundWhite(bitmap: Bitmap): Bitmap {
         Canvas(bitmap).let { canvas ->
             canvas.drawColor(Color.WHITE)
+        }
+        return bitmap
+    }
+
+    fun writeQrCodeToCanvas(qrCode: Bitmap, bitmap: Bitmap, x: Int, y: Int, scale: Float): Bitmap {
+        Canvas(bitmap).let { canvas ->
             Paint().let { paint ->
                 paint.color = Color.BLACK
                 canvas.drawBitmap(qrCode, x*scale, y*scale, paint)

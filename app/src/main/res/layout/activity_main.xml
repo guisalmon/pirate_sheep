@@ -240,38 +240,5 @@
             app:layout_constraintBottom_toTopOf="@id/marginBottom"
             app:layout_constraintEnd_toEndOf="@+id/marginEnd" />
 
-        <View
-            android:id="@+id/qrcode_overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/grey_overlay"
-            android:clickable="true"
-            android:focusable="true"
-            android:elevation="@dimen/size_01" />
-
-        <ImageView
-            android:id="@+id/qrcode_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:elevation="@dimen/size_02"
-            app:layout_constraintStart_toStartOf="@+id/marginStart"
-            app:layout_constraintEnd_toEndOf="@+id/marginEnd"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@id/marginTop"
-            app:layout_constraintBottom_toTopOf="@id/marginBottom"
-            android:contentDescription="QRCode" />
-
-        <ImageView
-            android:id="@+id/form_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:elevation="@dimen/size_03"
-            app:layout_constraintTop_toBottomOf="@id/marginTop"
-            app:layout_constraintBottom_toTopOf="@id/marginBottom"
-            app:layout_constraintDimensionRatio="7:10"
-            android:contentDescription="Form" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

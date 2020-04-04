@@ -1,9 +1,13 @@
 package org.robnetwork.piratesheep.ui
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -16,11 +20,12 @@ import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.ActivityMainBinding
 import org.robnetwork.piratesheep.model.MainData
 import org.robnetwork.piratesheep.utils.ImageUtils
+import org.robnetwork.piratesheep.utils.PdfUtils
 import org.robnetwork.piratesheep.utils.QRGeneratorUtil
+import java.io.FileOutputStream
 import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>() {
-
     override val layoutRes: Int = R.layout.activity_main
     override val viewModelClass = MainViewModel::class.java
 
@@ -50,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
         binding.qrcodeFab.setOnClickListener {
             viewModel.generateForm(this) {
-                //TODO open form with a pdf reader
+                createPdf()
             }
         }
     }
@@ -67,6 +72,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
     override fun onPause() {
         super.onPause()
         viewModel.storeData(this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == CREATE_FILE && resultData != null) {
+            resultData.data?.let {  uri ->
+                viewModel.saveForm(this, uri)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, resultData)
     }
 
     private fun setupBirthday(birthdayBtn: Button, cal: Calendar) {
@@ -168,6 +182,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         ).show()
     }
 
+    private fun createPdf() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_TITLE, "attestation.pdf")
+        }
+        startActivityForResult(intent, CREATE_FILE)
+    }
+
     private fun dateString(day: Int, month: Int, year: Int) = getString(
         R.string.date_template,
         day.numberTo2DigitString(),
@@ -196,10 +219,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             && place != null
             && date != null
             && time != null
+
+    companion object {
+        const val CREATE_FILE = 1
+    }
 }
 
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
     BaseViewModel<MainData>() {
+    private var pdf: PdfDocument? = null
 
     fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) =
         MainData.loadData(context) {
@@ -209,7 +237,8 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
 
     fun storeData(context: Context) = data.value?.let { MainData.storeData(context, it) }
 
-    fun generateForm(context: Context, onFormGenerated: (Pair<Bitmap?, Bitmap?>) -> Unit) {
+    fun generateForm(context: Context, onFormGenerated: () -> Unit) {
+
         data.value?.let {
             val formBitmap: Bitmap =
                 ImageUtils.drawableToBitmap(context, R.drawable.attestation_deplacement_empty)
@@ -250,9 +279,23 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                 )
             )
             formBitmap2.let { bitmap ->
+                ImageUtils.setBackgroundWhite(bitmap)
                 ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
             }
-            onFormGenerated(Pair(formBitmap, formBitmap2))
+            pdf = PdfUtils.generatePdf(Pair(formBitmap, formBitmap2))
+            onFormGenerated()
+        }
+    }
+
+    fun saveForm(context: Context, uri: Uri) {
+        context.contentResolver.openFileDescriptor(uri, "rw")?.let { parcelFileDescriptor ->
+            FileOutputStream(parcelFileDescriptor.fileDescriptor).let { fos ->
+                pdf?.let {
+                    it.writeTo(fos)
+                    it.close()
+                }
+                fos.close()
+            }
         }
     }
 
