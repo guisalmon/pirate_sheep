@@ -10,10 +10,6 @@ Cette application vise à générer un pdf reproduisant l'attestation de déplac
 
 Je ne sais pas si l'utilisation de cette application peut être considérée comme légale. Je la programme à des fins de recherche et pour passer le temps pendant le confinement, par curiosité intellectuelle, et je décline toute responsabilité si quelqu'un décide de l'utiliser pour justifier ses déplacements.
 
-## Installation
-
-Un fichier apk sera disponible ici quand je jugerai que l'application est suffisament aboutie.
-
 *English*
 
 ## TL;DR
@@ -26,7 +22,9 @@ I do not know whether using this app can be considered legal. I'm coding it for 
 
 ## Installation
 
-An apk file will be available here when I'll feel like the app is working fine.
+[Version 1.0](https://github.com/guisalmon/pirate_sheep/blob/d375bf24d350f6f604c3cdad4071f20d13c44cfe/release/app-release-unsigned.apk)
+
+> Fills the official form and saves it on the device.
 
 ## License
 
