@@ -13,6 +13,7 @@ data class MainData(
     val address: String? = null,
     val city: String? = null,
     val reason: String? = null,
+    val reasonIndex: Int = -1,
     val place: String? = null,
     val date: String? = null,
     val time: String? = null
@@ -25,6 +26,7 @@ data class MainData(
         private const val ADDRESS: String = "address"
         private const val CITY: String = "city"
         private const val REASON: String = "reason"
+        private const val REASON_INDEX: String = "reasonIndex"
         private const val PLACE: String = "place"
 
         fun storeData(context: Context, data: MainData) =
@@ -36,6 +38,7 @@ data class MainData(
                 .putString(ADDRESS, data.address)
                 .putString(CITY, data.city)
                 .putString(REASON, data.reason)
+                .putInt(REASON_INDEX, data.reasonIndex)
                 .putString(PLACE, data.place)
                 .apply()
 
@@ -49,6 +52,7 @@ data class MainData(
                     it.getString(ADDRESS, null),
                     it.getString(CITY, null),
                     it.getString(REASON, null),
+                    it.getInt(REASON_INDEX, -1),
                     it.getString(PLACE, null),
                     null,
                     null

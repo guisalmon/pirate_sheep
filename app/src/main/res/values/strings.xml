@@ -13,4 +13,11 @@
     <string name="date_template">%s/%s/%s</string>
     <string name="time_template">%sh%s</string>
     <string name="qr_code_template">Cree le: %s a %s; Nom: %s; Prenom: %s; Naissance: %s a %s; Adresse: %s %s; Sortie: %s a %s; Motif: %s</string>
+    <string name="reason_pro">Pro</string>
+    <string name="reason_groceries">Groceries</string>
+    <string name="reason_medical">Medical</string>
+    <string name="reason_help">Help</string>
+    <string name="reason_leisure">Leisure</string>
+    <string name="reason_legal">Legal</string>
+    <string name="reason_tig">TIG</string>
 </resources>
