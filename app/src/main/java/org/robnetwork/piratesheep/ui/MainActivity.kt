@@ -187,17 +187,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     private fun CharSequence?.nullIfEmpty() = if (isNullOrEmpty()) null else toString()
 
-    private fun MainData.isValid() =
-        firstName != null
-                && lastName != null
-                && birthday != null
-                && birthPlace != null
-                && address != null
-                && city != null
-                && reason != null
-                && place != null
-                && date != null
-                && time != null
+    private fun MainData.isValid() = firstName != null
+            && lastName != null
+            && birthday != null
+            && birthPlace != null
+            && address != null
+            && city != null
+            && reason != null
+            && place != null
+            && date != null
+            && time != null
 }
 
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
