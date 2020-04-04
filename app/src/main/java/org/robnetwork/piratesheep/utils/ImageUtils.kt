@@ -9,9 +9,8 @@ import androidx.annotation.DrawableRes
 import com.google.zxing.qrcode.encoder.QRCode
 
 object ImageUtils {
-    fun drawableToBitmap(context: Context, @DrawableRes res: Int, onDrawableDecoded: (Bitmap?) -> Unit) {
-        onDrawableDecoded(BitmapFactory.decodeResource(context.resources, res).copy(Bitmap.Config.ARGB_8888, true))
-    }
+    fun drawableToBitmap(context: Context, @DrawableRes res: Int): Bitmap =
+        BitmapFactory.decodeResource(context.resources, res).copy(Bitmap.Config.ARGB_8888, true)
 
     fun writeTextToBitmapAt(text: String, bitmap: Bitmap, x: Int, y: Int, size: Int, scale: Float, isLeftAligned: Boolean = true): Bitmap {
         Canvas(bitmap).let { canvas ->

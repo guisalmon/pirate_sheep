@@ -49,22 +49,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         binding.cityEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(city = t.nullIfEmpty()) } }
         binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
         binding.qrcodeFab.setOnClickListener {
-            viewModel.generateQrCode(this) {
-                binding.qrcodeOverlay.visibility = View.VISIBLE
-                binding.qrcodeView.visibility = View.VISIBLE
-                binding.qrcodeView.setImageBitmap(it)
-                binding.formView.visibility = View.VISIBLE
-                binding.formView.setImageBitmap(viewModel.formBitmap2)
+            viewModel.generateForm(this) {
+                //TODO open form with a pdf reader
             }
         }
-        binding.qrcodeOverlay.setOnClickListener {
-            binding.qrcodeOverlay.visibility = View.GONE
-            binding.qrcodeView.visibility = View.GONE
-            binding.formView.visibility = View.GONE
-        }
-        binding.qrcodeOverlay.visibility = View.GONE
-        binding.qrcodeView.visibility = View.GONE
-        binding.formView.visibility = View.GONE
     }
 
     override fun updateUI(data: MainData) {
@@ -212,100 +200,79 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
 class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveData(MainData())) :
     BaseViewModel<MainData>() {
-    var formBitmap: Bitmap? = null
-    var formBitmap2: Bitmap? = null
 
     fun loadData(context: Context, onDataLoadedListener: (MainData) -> Unit) =
         MainData.loadData(context) {
             data.value = it
-            ImageUtils.drawableToBitmap(context, R.drawable.attestation_deplacement_empty) { form ->
-                formBitmap = form
-                formBitmap2 = form?.let {
-                    Bitmap.createBitmap(
-                        form.width,
-                        form.height,
-                        Bitmap.Config.ARGB_8888
-                    )
-                }
-            }
             onDataLoadedListener(it)
         }
 
     fun storeData(context: Context) = data.value?.let { MainData.storeData(context, it) }
 
-    fun generateQrCode(context: Context, onQRCodeGenerated: (Bitmap) -> Unit) {
+    fun generateForm(context: Context, onFormGenerated: (Pair<Bitmap?, Bitmap?>) -> Unit) {
         data.value?.let {
+            val formBitmap: Bitmap =
+                ImageUtils.drawableToBitmap(context, R.drawable.attestation_deplacement_empty)
+            val formBitmap2: Bitmap =
+                Bitmap.createBitmap(formBitmap.width, formBitmap.height, Bitmap.Config.ARGB_8888)
             val density = context.resources.displayMetrics.density
-            formBitmap?.writeTextOnBitmap(
+            val qrCodeSmall = generateQrCode(context, it, density)
+            val qrCodeBig = generateQrCode(context, it, density * 3)
+
+            formBitmap.writeTextOnBitmap(
                 density,
                 FormField(it.firstName + " " + it.lastName, 257, 327)
             )
-            formBitmap?.writeTextOnBitmap(density, FormField(it.birthday + "", 257, 377))
-            formBitmap?.writeTextOnBitmap(density, FormField(it.birthPlace + "", 191, 425))
-            formBitmap?.writeTextOnBitmap(density, FormField(it.address + " " + it.city, 280, 478))
-            formBitmap?.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
-            formBitmap?.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
-            formBitmap?.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
+            formBitmap.writeTextOnBitmap(density, FormField(it.birthday + "", 257, 377))
+            formBitmap.writeTextOnBitmap(density, FormField(it.birthPlace + "", 191, 425))
+            formBitmap.writeTextOnBitmap(density, FormField(it.address + " " + it.city, 280, 478))
+            formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
+            formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
+            formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
             Reasons.reasonByIndex(it.reasonIndex)?.let { reason ->
-                formBitmap?.writeTextOnBitmap(density, FormField("X", reason.x, reason.y, 40))
+                formBitmap.writeTextOnBitmap(density, FormField("X", reason.x, reason.y, 40))
             }
-            QRGeneratorUtil.generateQRCode(
-                context.getString(
-                    R.string.qr_code_template,
-                    it.date,
-                    it.time,
-                    it.firstName,
-                    it.lastName,
-                    it.birthday,
-                    it.birthPlace,
-                    it.address,
-                    it.city,
-                    it.date,
-                    it.time,
-                    it.reason
-                ), 233, density
-            ) { qrCode ->
-                formBitmap?.let { bitmap ->
-                    ImageUtils.writeQrCodeToCanvas(qrCode, bitmap, 873, 1211, density)
-                }
-                formBitmap?.writeTextOnBitmap(
-                    density,
-                    FormField(context.getString(R.string.timestamp_1), 1077, 1441, 14, false)
+            formBitmap.let { bitmap ->
+                ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 873, 1211, density)
+            }
+            formBitmap.writeTextOnBitmap(
+                density,
+                FormField(context.getString(R.string.timestamp_1), 1077, 1441, 14, false)
+            )
+            formBitmap.writeTextOnBitmap(
+                density,
+                FormField(
+                    context.getString(R.string.timestamp_2, it.date, it.time),
+                    1077,
+                    1455,
+                    14,
+                    false
                 )
-                formBitmap?.writeTextOnBitmap(
-                    density,
-                    FormField(
-                        context.getString(R.string.timestamp_2, it.date, it.time),
-                        1077,
-                        1455,
-                        14,
-                        false
-                    )
-                )
+            )
+            formBitmap2.let { bitmap ->
+                ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
             }
-            QRGeneratorUtil.generateQRCode(
-                context.getString(
-                    R.string.qr_code_template,
-                    it.date,
-                    it.time,
-                    it.firstName,
-                    it.lastName,
-                    it.birthday,
-                    it.birthPlace,
-                    it.address,
-                    it.city,
-                    it.date,
-                    it.time,
-                    it.reason
-                ), 233, density*3
-            ) { qrCode ->
-                formBitmap2?.let { bitmap ->
-                    ImageUtils.writeQrCodeToCanvas(qrCode, bitmap, 70, 70, density)
-                }
-                onQRCodeGenerated(qrCode)
-            }
+            onFormGenerated(Pair(formBitmap, formBitmap2))
         }
     }
+
+    private fun generateQrCode(context: Context, data: MainData, density: Float) =
+        QRGeneratorUtil.generateQRCode(
+            context.getString(
+                R.string.qr_code_template,
+                data.date,
+                data.time,
+                data.firstName,
+                data.lastName,
+                data.birthday,
+                data.birthPlace,
+                data.address,
+                data.city,
+                data.date,
+                data.time,
+                data.reason
+            ), 233, density
+        )
 
     private fun Bitmap.writeTextOnBitmap(density: Float, field: FormField) {
         ImageUtils.writeTextToBitmapAt(
