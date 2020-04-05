@@ -12,6 +12,7 @@ data class MainData(
     val birthPlace: String? = null,
     val address: String? = null,
     val city: String? = null,
+    val code: String? = null,
     val reason: String? = null,
     val reasonIndex: Int = -1,
     val place: String? = null,
@@ -25,6 +26,7 @@ data class MainData(
         private const val BIRTH_PLACE: String = "birthPlace"
         private const val ADDRESS: String = "address"
         private const val CITY: String = "city"
+        private const val CODE: String = "code"
         private const val REASON: String = "reason"
         private const val REASON_INDEX: String = "reasonIndex"
         private const val PLACE: String = "place"
@@ -37,6 +39,7 @@ data class MainData(
                 .putString(BIRTH_PLACE, data.birthPlace)
                 .putString(ADDRESS, data.address)
                 .putString(CITY, data.city)
+                .putString(CODE, data.code)
                 .putString(REASON, data.reason)
                 .putInt(REASON_INDEX, data.reasonIndex)
                 .putString(PLACE, data.place)
@@ -51,6 +54,7 @@ data class MainData(
                     it.getString(BIRTH_PLACE, null),
                     it.getString(ADDRESS, null),
                     it.getString(CITY, null),
+                    it.getString(CODE, null),
                     it.getString(REASON, null),
                     it.getInt(REASON_INDEX, -1),
                     it.getString(PLACE, null),

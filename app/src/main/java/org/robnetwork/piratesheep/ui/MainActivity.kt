@@ -44,6 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             binding.birthPlaceEdit.setText(it.birthPlace)
             binding.addressEdit.setText(it.address)
             binding.cityEdit.setText(it.city)
+            binding.codeEdit.setText(it.code)
             binding.placeEdit.setText(it.place)
         }
 
@@ -52,6 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         binding.birthPlaceEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(birthPlace = t.nullIfEmpty()) } }
         binding.addressEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(address = t.nullIfEmpty()) } }
         binding.cityEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(city = t.nullIfEmpty()) } }
+        binding.codeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(code = t.nullIfEmpty()) } }
         binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
         binding.qrcodeFab.setOnClickListener {
             viewModel.generateForm(this) {
@@ -214,6 +216,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             && birthPlace != null
             && address != null
             && city != null
+            && code != null
             && reason != null
             && reasonIndex != -1
             && place != null
@@ -254,7 +257,7 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
             )
             formBitmap.writeTextOnBitmap(density, FormField(it.birthday + "", 257, 377))
             formBitmap.writeTextOnBitmap(density, FormField(it.birthPlace + "", 191, 425))
-            formBitmap.writeTextOnBitmap(density, FormField(it.address + " " + it.city, 280, 478))
+            formBitmap.writeTextOnBitmap(density, FormField(it.address + " " + it.code + " " + it.city, 280, 478))
             formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
             formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
             formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
@@ -282,7 +285,9 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                 ImageUtils.setBackgroundWhite(bitmap)
                 ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
             }
-            pdf = PdfUtils.generatePdf(Pair(formBitmap, formBitmap2))
+            pdf = PdfUtils.generatePdf(Pair(
+                ImageUtils.resizeBitmapToScreen(context, formBitmap),
+                ImageUtils.resizeBitmapToScreen(context, formBitmap2)))
             onFormGenerated()
         }
     }
@@ -310,6 +315,7 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                 data.birthday,
                 data.birthPlace,
                 data.address,
+                data.code,
                 data.city,
                 data.date,
                 data.time,

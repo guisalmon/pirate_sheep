@@ -2,11 +2,8 @@ package org.robnetwork.piratesheep.utils
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.annotation.DrawableRes
-import com.google.zxing.qrcode.encoder.QRCode
 
 object ImageUtils {
     fun drawableToBitmap(context: Context, @DrawableRes res: Int): Bitmap =
@@ -25,9 +22,7 @@ object ImageUtils {
     }
 
     fun setBackgroundWhite(bitmap: Bitmap): Bitmap {
-        Canvas(bitmap).let { canvas ->
-            canvas.drawColor(Color.WHITE)
-        }
+        Canvas(bitmap).drawColor(Color.WHITE)
         return bitmap
     }
 
@@ -39,5 +34,12 @@ object ImageUtils {
             }
         }
         return bitmap
+    }
+
+    fun resizeBitmapToScreen(context: Context, bitmap: Bitmap): Bitmap {
+        val width = context.resources.displayMetrics.widthPixels
+        val height = ((bitmap.height.toFloat()/bitmap.width.toFloat())*width.toFloat()).toInt()
+        Log.e(ImageUtils::class.java.simpleName, "bitmap : ${bitmap.width}x${bitmap.height}, pdf : ${width}x$height")
+        return Bitmap.createScaledBitmap(bitmap, width, height, false)
     }
 }
