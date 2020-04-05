@@ -24,9 +24,9 @@ I do not know whether using this app can be considered legal. I'm coding it for 
 
 [Version 1.0.2](https://github.com/guisalmon/pirate_sheep/blob/1.0.2/app/release/app-release.apk)
 
+>L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. 
 >
-> L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. 
-> Fills the official form and saves it on the device as pdf.
+>Fills the official form and saves it on the device as pdf.
 
 ## License
 
