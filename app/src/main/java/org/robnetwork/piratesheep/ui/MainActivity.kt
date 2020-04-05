@@ -285,7 +285,9 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                 ImageUtils.setBackgroundWhite(bitmap)
                 ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
             }
-            pdf = PdfUtils.generatePdf(Pair(formBitmap, formBitmap2))
+            pdf = PdfUtils.generatePdf(Pair(
+                ImageUtils.resizeBitmapToScreen(context, formBitmap),
+                ImageUtils.resizeBitmapToScreen(context, formBitmap2)))
             onFormGenerated()
         }
     }
