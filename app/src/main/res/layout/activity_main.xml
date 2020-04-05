@@ -96,12 +96,20 @@
             app:layout_constraintTop_toBottomOf="@id/address_label" />
 
         <TextView
+            android:id="@+id/code_label"
+            style="@style/Text.Label"
+            android:text="@string/main_code"
+            app:layout_constraintEnd_toStartOf="@+id/separator"
+            app:layout_constraintStart_toStartOf="@+id/marginStart"
+            app:layout_constraintTop_toBottomOf="@id/city_label" />
+
+        <TextView
             android:id="@+id/reason_label"
             style="@style/Text.Label"
             android:text="@string/main_reason"
             app:layout_constraintEnd_toStartOf="@+id/separator"
             app:layout_constraintStart_toStartOf="@+id/marginStart"
-            app:layout_constraintTop_toBottomOf="@id/city_label" />
+            app:layout_constraintTop_toBottomOf="@id/code_label" />
 
         <TextView
             android:id="@+id/place_label"
@@ -187,13 +195,23 @@
             app:layout_constraintStart_toStartOf="@id/separator"
             app:layout_constraintTop_toBottomOf="@id/address_edit" />
 
+        <EditText
+            android:id="@+id/code_edit"
+            style="@style/Text.Edit"
+            android:autofillHints=""
+            android:hint="@string/main_code"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toStartOf="@id/marginEnd"
+            app:layout_constraintStart_toStartOf="@id/separator"
+            app:layout_constraintTop_toBottomOf="@id/city_edit" />
+
         <Spinner
             android:id="@+id/reason_edit"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_06"
             app:layout_constraintEnd_toStartOf="@id/marginEnd"
             app:layout_constraintStart_toStartOf="@id/separator"
-            app:layout_constraintTop_toBottomOf="@+id/city_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/code_edit" />
 
         <EditText
             android:id="@+id/place_edit"
@@ -236,6 +254,7 @@
             android:layout_height="@dimen/size_07"
             android:focusable="true"
             android:src="@drawable/qrcode"
+            android:contentDescription="@string/desc_qr_fab"
             android:tint="@color/white"
             app:layout_constraintBottom_toTopOf="@id/marginBottom"
             app:layout_constraintEnd_toEndOf="@+id/marginEnd" />
