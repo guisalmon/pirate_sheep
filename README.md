@@ -22,9 +22,11 @@ I do not know whether using this app can be considered legal. I'm coding it for 
 
 ## Installation
 
-[Version 1.0](https://github.com/guisalmon/pirate_sheep/blob/d375bf24d350f6f604c3cdad4071f20d13c44cfe/release/app-release-unsigned.apk)
+[Version 1.0.2](https://github.com/guisalmon/pirate_sheep/blob/1.0.2/app/release/app-release.apk)
 
-> Fills the official form and saves it on the device.
+>
+> L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. 
+> Fills the official form and saves it on the device as pdf.
 
 ## License
 
