@@ -52,7 +52,7 @@ There isn't anything illegal in reproducing this attestation. It is allowed to d
 
 ## Installation
 
-[Version 1.0.3](https://github.com/guisalmon/pirate_sheep/blob/1.0.3/app/release/app-release.apk)
+[Version 1.0.4](https://github.com/guisalmon/pirate_sheep/blob/1.0.4/app/release/app-release.apk)
 
 >L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. Le QR code correspond au format utilisé par le site governemental.
 >
