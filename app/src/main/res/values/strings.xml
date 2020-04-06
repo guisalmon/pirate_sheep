@@ -24,4 +24,6 @@
     <string name="reason_legal">Legal</string>
     <string name="reason_tig">TIG</string>
     <string name="desc_qr_fab">Generate document</string>
+    <string name="bottom_nav_form">Form</string>
+    <string name="bottom_nav_list">Attestations</string>
 </resources>
