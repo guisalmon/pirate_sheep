@@ -21,7 +21,7 @@ import org.robnetwork.piratesheep.databinding.ActivityMainBinding
 import org.robnetwork.piratesheep.model.MainData
 import org.robnetwork.piratesheep.utils.ImageUtils
 import org.robnetwork.piratesheep.utils.PdfUtils
-import org.robnetwork.piratesheep.utils.QRGeneratorUtil
+import org.robnetwork.piratesheep.utils.QRGeneratorUtils
 import java.io.FileOutputStream
 import java.util.*
 
@@ -311,7 +311,7 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
     }
 
     private fun generateQrCode(context: Context, data: MainData, density: Float) =
-        QRGeneratorUtil.generateQRCode(
+        QRGeneratorUtils.generateQRCode(
             context.getString(
                 R.string.qr_code_template,
                 data.date,
