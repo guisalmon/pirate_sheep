@@ -12,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.fragment.NavHostFragment
 import org.robnetwork.piratesheep.model.BaseData
 
@@ -31,7 +32,7 @@ abstract class BaseFragment<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
         savedInstanceState: Bundle?
     ) = DataBindingUtil.inflate<B>(inflater, layoutRes, container, false)?.apply {
         binding = this
-        (activity as? MainActivity)?.let { viewModel = ViewModelProvider(it).get(viewModelClass) }
+        getModelStoreOwner()?.let { viewModel = ViewModelProvider(it).get(viewModelClass) }
     }?.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +45,10 @@ abstract class BaseFragment<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
         viewModel.registerObserver(this, Observer { updateUI(it) })
     }
 
-    abstract fun updateUI(data: D)
+
+    protected abstract fun getModelStoreOwner(): ViewModelStoreOwner?
+
+    protected abstract fun updateUI(data: D)
 
     protected fun navigateTo(navId: Int) {
         NavHostFragment.findNavController(this).navigate(navId)

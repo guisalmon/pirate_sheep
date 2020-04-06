@@ -8,5 +8,7 @@ class ListFragment : BaseFragment<FragmentCreationBinding, MainData, MainViewMod
     override val layoutRes = R.layout.fragment_list
     override val viewModelClass = MainViewModel::class.java
 
+    override fun getModelStoreOwner() = (activity as? MainActivity)
+
     override fun updateUI(data: MainData) {}
 }

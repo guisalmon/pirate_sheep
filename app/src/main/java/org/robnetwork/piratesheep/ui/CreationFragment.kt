@@ -21,6 +21,8 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     override val layoutRes: Int = R.layout.fragment_creation
     override val viewModelClass = MainViewModel::class.java
 
+    override fun getModelStoreOwner() = (activity as? MainActivity)
+
     override fun setupUI(binding: FragmentCreationBinding, context: Context) {
         super.setupUI(binding, context)
 
@@ -127,7 +129,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     }
 
     private fun setupReason(reasonSpinner: Spinner, reasonIndex: Int?, context: Context) {
-        val reasonsList = Reasons.values().toList()
+        val reasonsList = MainViewModel.Reasons.values().toList()
         ReasonsSpinnerAdapter(
             context,
             android.R.layout.simple_spinner_item,
@@ -207,7 +209,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             type = "application/pdf"
             putExtra(Intent.EXTRA_TITLE, "attestation.pdf")
         }
-        startActivityForResult(intent, MainActivity.CREATE_FILE)
+        activity?.startActivityForResult(intent, MainActivity.CREATE_FILE)
     }
 
     private fun openPdf(uri: Uri) =
@@ -233,28 +235,28 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     )
 
     private fun Int.numberTo2DigitString() = if (this < 10) "0$this" else toString()
-}
 
-private class ReasonsSpinnerAdapter(
-    context: Context, @LayoutRes layout: Int,
-    private val reasons: List<Reasons>
-) : ArrayAdapter<Reasons>(context, layout, reasons) {
+    private class ReasonsSpinnerAdapter(
+        context: Context, @LayoutRes layout: Int,
+        private val reasons: List<MainViewModel.Reasons>
+    ) : ArrayAdapter<MainViewModel.Reasons>(context, layout, reasons) {
 
-    override fun getCount() = reasons.size
+        override fun getCount() = reasons.size
 
-    override fun getItem(position: Int) = reasons[position]
+        override fun getItem(position: Int) = reasons[position]
 
-    override fun getItemId(position: Int) = position.toLong()
+        override fun getItemId(position: Int) = position.toLong()
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getView(position, convertView, parent)
-        (view as? TextView)?.text = reasons[position].toReadableText(context)
-        return view
-    }
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = super.getView(position, convertView, parent)
+            (view as? TextView)?.text = reasons[position].toReadableText(context)
+            return view
+        }
 
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = super.getDropDownView(position, convertView, parent)
-        (view as? TextView)?.text = reasons[position].toReadableText(context)
-        return view
+        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = super.getDropDownView(position, convertView, parent)
+            (view as? TextView)?.text = reasons[position].toReadableText(context)
+            return view
+        }
     }
 }

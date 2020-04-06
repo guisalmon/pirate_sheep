@@ -35,16 +35,3 @@ abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
 
     abstract fun updateUI(data: D)
 }
-
-abstract class BaseViewModel<D : BaseData> : ViewModel() {
-    protected abstract val data: MutableLiveData<D>
-
-    fun registerObserver(owner: LifecycleOwner, observer: Observer<D>) =
-        data.observe(owner, observer)
-
-    open fun update(copy: (D) -> D) {
-        data.value?.let {
-            data.value = copy(it)
-        } ?: Log.e(javaClass.simpleName, "Attempt to update uninitialized data")
-    }
-}

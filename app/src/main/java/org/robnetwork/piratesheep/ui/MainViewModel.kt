@@ -133,25 +133,25 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
         val size: Int = 20,
         val isLeftAligned: Boolean = true
     )
-}
 
-enum class Reasons(
-    val index: Int,
-    val x: Int,
-    val y: Int, @StringRes val textRes: Int,
-    val keyword: String
-) {
-    PRO(0, 157, 658, R.string.reason_pro, "travail"),
-    GROCERIES(1, 157, 762, R.string.reason_groceries, "courses"),
-    MEDICAL(2, 157, 847, R.string.reason_medical, "sante"),
-    HELP(3, 157, 923, R.string.reason_help, "famille"),
-    LEISURE(4, 157, 1039, R.string.reason_leisure, "sport"),
-    LEGAL(5, 157, 1135, R.string.reason_legal, "judiciaire"),
-    TIG(6, 157, 1212, R.string.reason_tig, "missions");
+    enum class Reasons(
+        val index: Int,
+        val x: Int,
+        val y: Int, @StringRes val textRes: Int,
+        val keyword: String
+    ) {
+        PRO(0, 157, 658, R.string.reason_pro, "travail"),
+        GROCERIES(1, 157, 762, R.string.reason_groceries, "courses"),
+        MEDICAL(2, 157, 847, R.string.reason_medical, "sante"),
+        HELP(3, 157, 923, R.string.reason_help, "famille"),
+        LEISURE(4, 157, 1039, R.string.reason_leisure, "sport"),
+        LEGAL(5, 157, 1135, R.string.reason_legal, "judiciaire"),
+        TIG(6, 157, 1212, R.string.reason_tig, "missions");
 
-    fun toReadableText(context: Context) = context.getString(this.textRes)
+        fun toReadableText(context: Context) = context.getString(this.textRes)
 
-    companion object {
-        fun reasonByIndex(index: Int?) = values().firstOrNull { it.index == index }
+        companion object {
+            fun reasonByIndex(index: Int?) = values().firstOrNull { it.index == index }
+        }
     }
 }
