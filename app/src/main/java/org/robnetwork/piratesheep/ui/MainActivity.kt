@@ -128,7 +128,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     private fun setupTime(timeBtn: Button, cal: Calendar) {
         viewModel.update {
-            it.copy(time = timeString(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)))
+            val time = timeString(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.HOUR_OF_DAY))
+            it.copy(time = time, timeStamp = time)
         }
         timeBtn.setOnClickListener(
             showTimePicker(
@@ -137,7 +138,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
                     viewModel.update {
                         it.copy(
                             time = timeString(hourOfDay, minute),
-                            timeStamp = timeString(hourOfDay, minute + 2)
+                            timeStamp = timeString(hourOfDay, minute)
                         )
                     }
                 })
