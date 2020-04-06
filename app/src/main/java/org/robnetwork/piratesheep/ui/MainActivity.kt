@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
+import android.os.Build
+import android.provider.DocumentsContract
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -77,11 +79,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == CREATE_FILE && resultData != null) {
-            resultData.data?.let { uri ->
-                viewModel.saveForm(this, uri)
+        if (resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also {
+                when (requestCode) {
+                    CREATE_FILE -> {
+                        viewModel.saveForm(this, it)
+                        //openPdf(it)
+                    }
+                    PICK_PDF_FILE -> startActivity(Intent().apply {
+                        action = Intent.ACTION_VIEW
+                        setDataAndType(it, "application/pdf")
+                    })
+                }
             }
         }
+
         super.onActivityResult(requestCode, resultCode, resultData)
     }
 
@@ -122,7 +134,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             showTimePicker(
                 cal,
                 TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    viewModel.update { it.copy(time = timeString(hourOfDay, minute), timeStamp = timeString(hourOfDay, minute+2)) }
+                    viewModel.update {
+                        it.copy(
+                            time = timeString(hourOfDay, minute),
+                            timeStamp = timeString(hourOfDay, minute + 2)
+                        )
+                    }
                 })
         )
     }
@@ -193,6 +210,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
         startActivityForResult(intent, CREATE_FILE)
     }
 
+    private fun openPdf(uri: Uri) =
+        startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            setDataAndType(uri, "application/pdf")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                putExtra(DocumentsContract.EXTRA_INITIAL_URI, uri)
+            }
+        }, PICK_PDF_FILE)
+
     private fun dateString(day: Int, month: Int, year: Int) = getString(
         R.string.date_template,
         day.numberTo2DigitString(),
@@ -210,21 +236,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     private fun CharSequence?.nullIfEmpty() = if (isNullOrEmpty()) null else toString()
 
-    private fun MainData.isValid() = firstName != null
-            && lastName != null
-            && birthday != null
-            && birthPlace != null
-            && address != null
-            && city != null
-            && code != null
-            && reason != null
+    private fun MainData.isValid() = !firstName.isNullOrBlank()
+            && !lastName.isNullOrBlank()
+            && !birthday.isNullOrBlank()
+            && !birthPlace.isNullOrBlank()
+            && !address.isNullOrBlank()
+            && !city.isNullOrBlank()
+            && !code.isNullOrBlank()
+            && !reason.isNullOrBlank()
             && reasonIndex != -1
-            && place != null
-            && date != null
-            && time != null
+            && !place.isNullOrBlank()
+            && !date.isNullOrBlank()
+            && !time.isNullOrBlank()
 
     companion object {
         const val CREATE_FILE = 1
+        const val PICK_PDF_FILE = 2
+
     }
 }
 
