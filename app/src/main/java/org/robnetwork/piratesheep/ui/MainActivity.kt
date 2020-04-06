@@ -78,7 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == CREATE_FILE && resultData != null) {
-            resultData.data?.let {  uri ->
+            resultData.data?.let { uri ->
                 viewModel.saveForm(this, uri)
             }
         }
@@ -122,7 +122,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
             showTimePicker(
                 cal,
                 TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    viewModel.update { it.copy(time = timeString(hourOfDay, minute)) }
+                    viewModel.update { it.copy(time = timeString(hourOfDay, minute), timeStamp = timeString(hourOfDay, minute+2)) }
                 })
         )
     }
@@ -151,7 +151,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainData, MainViewModel>(
                 id: Long
             ) = viewModel.update {
                 it.copy(
-                    reason = reasonsList[position].toReadableText(this@MainActivity),
+                    reason = reasonsList[position].keyword,
                     reasonIndex = position
                 )
             }
@@ -257,7 +257,10 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
             )
             formBitmap.writeTextOnBitmap(density, FormField(it.birthday + "", 257, 377))
             formBitmap.writeTextOnBitmap(density, FormField(it.birthPlace + "", 191, 425))
-            formBitmap.writeTextOnBitmap(density, FormField(it.address + " " + it.code + " " + it.city, 280, 478))
+            formBitmap.writeTextOnBitmap(
+                density,
+                FormField(it.address + " " + it.code + " " + it.city, 280, 478)
+            )
             formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
             formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
             formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
@@ -285,9 +288,12 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
                 ImageUtils.setBackgroundWhite(bitmap)
                 ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
             }
-            pdf = PdfUtils.generatePdf(Pair(
-                ImageUtils.resizeBitmapToScreen(context, formBitmap),
-                ImageUtils.resizeBitmapToScreen(context, formBitmap2)))
+            pdf = PdfUtils.generatePdf(
+                Pair(
+                    ImageUtils.resizeBitmapToScreen(context, formBitmap),
+                    ImageUtils.resizeBitmapToScreen(context, formBitmap2)
+                )
+            )
             onFormGenerated()
         }
     }
@@ -309,9 +315,9 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
             context.getString(
                 R.string.qr_code_template,
                 data.date,
-                data.time,
-                data.firstName,
+                data.timeStamp,
                 data.lastName,
+                data.firstName,
                 data.birthday,
                 data.birthPlace,
                 data.address,
@@ -344,14 +350,19 @@ class MainViewModel(override val data: MutableLiveData<MainData> = MutableLiveDa
     )
 }
 
-private enum class Reasons(val index: Int, val x: Int, val y: Int, @StringRes val textRes: Int) {
-    PRO(0, 157, 658, R.string.reason_pro),
-    GROCERIES(1, 157, 762, R.string.reason_groceries),
-    MEDICAL(2, 157, 847, R.string.reason_medical),
-    HELP(3, 157, 923, R.string.reason_help),
-    LEISURE(4, 157, 1039, R.string.reason_leisure),
-    LEGAL(5, 157, 1135, R.string.reason_legal),
-    TIG(6, 157, 1212, R.string.reason_tig);
+private enum class Reasons(
+    val index: Int,
+    val x: Int,
+    val y: Int, @StringRes val textRes: Int,
+    val keyword: String
+) {
+    PRO(0, 157, 658, R.string.reason_pro, "travail"),
+    GROCERIES(1, 157, 762, R.string.reason_groceries, "courses"),
+    MEDICAL(2, 157, 847, R.string.reason_medical, "sante"),
+    HELP(3, 157, 923, R.string.reason_help, "famille"),
+    LEISURE(4, 157, 1039, R.string.reason_leisure, "sport"),
+    LEGAL(5, 157, 1135, R.string.reason_legal, "judiciaire"),
+    TIG(6, 157, 1212, R.string.reason_tig, "missions");
 
     fun toReadableText(context: Context) = context.getString(this.textRes)
 

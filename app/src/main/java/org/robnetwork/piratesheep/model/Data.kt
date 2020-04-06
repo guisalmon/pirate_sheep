@@ -17,7 +17,8 @@ data class MainData(
     val reasonIndex: Int = -1,
     val place: String? = null,
     val date: String? = null,
-    val time: String? = null
+    val time: String? = null,
+    val timeStamp: String? = null
 ) : BaseData {
     companion object {
         private const val FIRSTNAME: String = "firstName"

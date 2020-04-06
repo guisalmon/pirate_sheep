@@ -4,7 +4,7 @@
     <string name="timestamp_2" translatable="false">%s à %s</string>
     <string name="date_template" translatable="false">%s/%s/%s</string>
     <string name="time_template" translatable="false">%sh%s</string>
-    <string name="qr_code_template" translatable="false">Cree le: %s a %s; Nom: %s; Prenom: %s; Naissance: %s a %s; Adresse: %s %s %s; Sortie: %s a %s; Motif: %s</string>
+    <string name="qr_code_template" translatable="false">Cree le: %s a %s; Nom: %s; Prenom: %s; Naissance: %s a %s; Adresse: %s %s %s; Sortie: %s a %s; Motifs: %s</string>
     <string name="main_first_name">First Name</string>
     <string name="main_last_name">Last Name</string>
     <string name="main_birthday">Birthday</string>
