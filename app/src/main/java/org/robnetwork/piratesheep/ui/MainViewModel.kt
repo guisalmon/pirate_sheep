@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import org.robnetwork.piratesheep.R
+import org.robnetwork.piratesheep.model.ListItemData
 import org.robnetwork.piratesheep.model.MainData
 import org.robnetwork.piratesheep.utils.ImageUtils
 import org.robnetwork.piratesheep.utils.PdfUtils
@@ -25,7 +26,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
 
     fun storeData(context: Context) = data.value?.let { MainData.storeData(context, it) }
 
-    fun generateForm(context: Context, onFormGenerated: () -> Unit) {
+    fun generateForm(context: Context, onFormGenerated: (ListItemData?) -> Unit) {
 
         data.value?.let {
             val formBitmap: Bitmap =
@@ -79,7 +80,9 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                     ImageUtils.resizeBitmapToScreen(context, formBitmap2)
                 )
             )
-            onFormGenerated()
+            val lastItem = ListItemData(formBitmap, formBitmap2, qrCodeSmall, "attestation_${it.date}_${it.time}.pdf")
+            data.value = it.copy(lastItem = lastItem)
+            onFormGenerated(lastItem)
         }
     }
 
@@ -91,6 +94,9 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                     it.close()
                 }
                 fos.close()
+            }
+            data.value?.let {
+                it.lastItem?.let { lastItem -> it.list.add(lastItem) }
             }
         }
     }
@@ -134,6 +140,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
         val isLeftAligned: Boolean = true
     )
 
+    @Suppress("unused")
     enum class Reasons(
         val index: Int,
         val x: Int,

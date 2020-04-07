@@ -63,8 +63,8 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
         binding.codeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(code = t.nullIfEmpty()) } }
         binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
         binding.qrcodeFab.setOnClickListener {
-            viewModel.generateForm(context) {
-                createPdf()
+            viewModel.generateForm(context) { lastDoc ->
+                createPdf(lastDoc?.fileName)
             }
         }
     }
@@ -203,11 +203,11 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     private fun CharSequence?.nullIfEmpty() = if (isNullOrEmpty()) null else toString()
 
 
-    private fun createPdf() {
+    private fun createPdf(docName: String?) {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "application/pdf"
-            putExtra(Intent.EXTRA_TITLE, "attestation.pdf")
+            putExtra(Intent.EXTRA_TITLE, docName)
         }
         activity?.startActivityForResult(intent, MainActivity.CREATE_FILE)
     }

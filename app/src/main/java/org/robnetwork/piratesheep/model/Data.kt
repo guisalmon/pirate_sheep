@@ -1,7 +1,9 @@
 package org.robnetwork.piratesheep.model
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.preference.PreferenceManager
+import java.util.*
 
 interface BaseData
 
@@ -18,7 +20,9 @@ data class MainData(
     val place: String? = null,
     val date: String? = null,
     val time: String? = null,
-    val timeStamp: String? = null
+    val timeStamp: String? = null,
+    val lastItem: ListItemData? = null,
+    val list: MutableList<ListItemData> = mutableListOf()
 ) : BaseData {
     companion object {
         private const val FIRSTNAME: String = "firstName"
@@ -66,3 +70,10 @@ data class MainData(
         }
     }
 }
+
+data class ListItemData(
+    val page1: Bitmap,
+    val page2: Bitmap,
+    val code: Bitmap,
+    val fileName: String
+)
