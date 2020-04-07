@@ -21,28 +21,27 @@ class ListFragment : BaseFragment<FragmentListBinding, MainData, MainViewModel>(
 
     override fun setupUI(binding: FragmentListBinding, context: Context) {
         super.setupUI(binding, context)
+        binding.imagePager.visibility = View.GONE
         binding.listRecycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun updateUI(binding: FragmentListBinding, data: MainData) {
-        binding.listRecycler.adapter = ListItemAdapter(data.list)
-    }
-}
+        binding.listRecycler.adapter = ListItemAdapter(data.list, {
 
-class ListItemVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val binding: ListItemAttestationBinding? = DataBindingUtil.bind(itemView)
-
-    fun bind(itemData: ListItemData) {
-        binding?.let {
-            it.itemLabel.text = itemData.fileName
-            it.qrcodeView.setImageBitmap(itemData.code)
-        }
+        }, { item ->
+            viewModel.data.value?.let {
+                viewModel.data.value = it.copy(list = it.list.apply { remove(item) },
+                    pathSet = it.pathSet.apply { remove(item.fileName) })
+            }
+        })
     }
 }
 
 class ListItemAdapter(
-    private val data: MutableList<ListItemData>
-) : RecyclerView.Adapter<ListItemVH>() {
+    private val data: MutableList<ListItemData>,
+    private val onItemClick: (ListItemData) -> Unit,
+    private val onItemLongClick: (ListItemData) -> Unit
+) : RecyclerView.Adapter<ListItemAdapter.ListItemVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemVH(
@@ -55,6 +54,24 @@ class ListItemAdapter(
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: ListItemVH, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ListItemVH, position: Int) =
+        holder.bind(data[position], onItemClick, onItemLongClick)
 
+
+    inner class ListItemVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding: ListItemAttestationBinding? = DataBindingUtil.bind(itemView)
+
+        fun bind(
+            itemData: ListItemData,
+            onItemClick: (ListItemData) -> Unit,
+            onItemLongClick: (ListItemData) -> Unit
+        ) {
+            binding?.let {
+                it.itemLabel.text = itemData.fileName
+                it.qrcodeView.setImageBitmap(itemData.code)
+                it.itemContainer.setOnClickListener { onItemClick(itemData) }
+                it.itemContainer.setOnLongClickListener { onItemLongClick(itemData).let { true } }
+            }
+        }
+    }
 }

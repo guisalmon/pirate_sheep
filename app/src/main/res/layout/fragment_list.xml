@@ -10,5 +10,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/image_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="@dimen/size_02"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

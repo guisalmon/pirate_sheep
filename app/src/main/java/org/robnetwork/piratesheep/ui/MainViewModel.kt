@@ -2,6 +2,7 @@ package org.robnetwork.piratesheep.ui
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import androidx.annotation.StringRes
@@ -80,7 +81,12 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                     ImageUtils.resizeBitmapToScreen(context, formBitmap2)
                 )
             )
-            val lastItem = ListItemData(formBitmap, formBitmap2, qrCodeSmall, "attestation_${it.date}_${it.time}.pdf")
+            val lastItem = ListItemData(
+                formBitmap,
+                formBitmap2,
+                qrCodeSmall,
+                "attestation_${it.date?.replace('/', '_')}_${it.time}.pdf"
+            )
             data.value = it.copy(lastItem = lastItem)
             onFormGenerated(lastItem)
         }
@@ -96,7 +102,10 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                 fos.close()
             }
             data.value?.let {
-                it.lastItem?.let { lastItem -> it.list.add(lastItem) }
+                it.lastItem?.let { lastItem ->
+                    it.list.add(lastItem)
+                    data.value = it.copy(pathSet = it.pathSet.apply { add(lastItem.fileName) })
+                }
             }
         }
     }
