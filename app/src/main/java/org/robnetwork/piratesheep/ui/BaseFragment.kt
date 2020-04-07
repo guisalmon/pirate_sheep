@@ -42,13 +42,13 @@ abstract class BaseFragment<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
 
     @CallSuper
     protected open fun setupUI(binding: B, context: Context) {
-        viewModel.registerObserver(this, Observer { updateUI(it) })
+        viewModel.registerObserver(this, Observer { updateUI(binding, it) })
     }
 
 
     protected abstract fun getModelStoreOwner(): ViewModelStoreOwner?
 
-    protected abstract fun updateUI(data: D)
+    protected abstract fun updateUI(binding: B, data: D)
 
     protected fun navigateTo(navId: Int) {
         NavHostFragment.findNavController(this).navigate(navId)

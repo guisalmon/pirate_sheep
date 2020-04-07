@@ -40,7 +40,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             binding.cityEdit.setText(it.city)
             binding.codeEdit.setText(it.code)
             binding.placeEdit.setText(it.place)
-            updateUI(it)
+            updateUI(binding, it)
         }
 
         binding.firstNameEdit.doOnTextChanged { t, _, _, _ ->
@@ -69,7 +69,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
         }
     }
 
-    override fun updateUI(data: MainData) {
+    override fun updateUI(binding: FragmentCreationBinding, data: MainData) {
         binding?.let {
             it.birthdayEdit.text = data.birthday
             it.dateEdit.text = data.date
