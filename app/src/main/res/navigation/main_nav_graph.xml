@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/creation_fragment">
+
+    <fragment
+        android:id="@+id/creation_fragment"
+        android:name="org.robnetwork.piratesheep.ui.CreationFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/list_fragment"
+        android:name="org.robnetwork.piratesheep.ui.ListFragment">
+    </fragment>
+</navigation>

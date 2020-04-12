@@ -25,6 +25,17 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
+            <ImageButton
+                android:id="@+id/toolbar_delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/delete"
+                android:tint="@color/white_pressed_dark"
+                android:background="@color/zxing_transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                android:contentDescription="delete" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </layout>

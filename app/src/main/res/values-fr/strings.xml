@@ -19,4 +19,7 @@
     <string name="reason_legal">Légale</string>
     <string name="reason_tig">Intéret général</string>
     <string name="desc_qr_fab">Générer le document</string>
+    <string name="bottom_nav_form">Formulaire</string>
+    <string name="bottom_nav_list">Attestations</string>
+    <string name="toolbar_delete">Supprimer</string>
 </resources>

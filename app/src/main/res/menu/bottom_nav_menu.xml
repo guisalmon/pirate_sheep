@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@id/creation_fragment"
+        android:enabled="true"
+        android:icon="@drawable/file_document_edit"
+        android:title="@string/bottom_nav_form"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@id/list_fragment"
+        android:enabled="true"
+        android:icon="@drawable/format_list_bulleted_square"
+        android:title="@string/bottom_nav_list"
+        app:showAsAction="ifRoom" />
+</menu>
