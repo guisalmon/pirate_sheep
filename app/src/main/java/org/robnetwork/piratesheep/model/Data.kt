@@ -42,10 +42,11 @@ data class MainData(
         private const val PATH_SET: String = "paths"
 
         fun storeData(context: Context, data: MainData) {
-            data.lastItem?.let {
+            data.list.filterNot { it.stored }.forEach {
                 saveBitmap(context, it.page1, ListItemData.page1FileName(it.fileName))
                 saveBitmap(context, it.page2, ListItemData.page2FileName(it.fileName))
                 saveBitmap(context, it.code, ListItemData.qrCodeFileName(it.fileName))
+                data.list[data.list.indexOf(it)] = it.apply { stored = true }
             }
             PreferenceManager.getDefaultSharedPreferences(context.applicationContext).edit()
                 .putString(FIRSTNAME, data.firstName)
@@ -86,7 +87,8 @@ data class MainData(
                                 loadBitmap(context, ListItemData.page1FileName(fileName)),
                                 loadBitmap(context, ListItemData.page2FileName(fileName)),
                                 loadBitmap(context, ListItemData.qrCodeFileName(fileName)),
-                                fileName
+                                fileName,
+                                true
                             )
                         } catch (e: Exception) {
                             return@map null
@@ -127,14 +129,15 @@ data class ListItemData(
     val fileName: String
 ) {
     var toDelete = false
+    var stored = false
     companion object {
         fun page1FileName(fileName: String) = fileName.replace(".pdf", "_page1")
         fun page2FileName(fileName: String) = fileName.replace(".pdf", "_page2")
         fun qrCodeFileName(fileName: String) = fileName.replace(".pdf", "_qrCode")
 
-        fun listItemData(page1: Bitmap?, page2: Bitmap?, code: Bitmap?, fileName: String?) =
+        fun listItemData(page1: Bitmap?, page2: Bitmap?, code: Bitmap?, fileName: String?, stored: Boolean) =
             if (page1 != null && page2 != null && code != null && fileName != null)
-                ListItemData(page1, page2, code, fileName)
+                ListItemData(page1, page2, code, fileName).apply { this.stored = stored }
             else null
     }
 }
