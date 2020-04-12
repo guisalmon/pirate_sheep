@@ -50,9 +50,15 @@ Finally, because this app is open source, anyone can check out the code, and any
 
 There isn't anything illegal in reproducing this attestation. It is allowed to do it with a pen and paper, why not using an app then? Right now it is forbidden to use dematerialized attestation which already is legally unjustified, so once dematerialized attestations from the official website will be alllowed, I see no reason why an identical reproduction from another source would be an issue. 
 
+## /!\ ATTENTION /!\
+
+**Le gouvernement a mis à jour leur site et le QRcode généré par l'app ne correspond plus à celui généré par le site : le contenu textuel est le même mais l'apparence du QRcode est légèrement différente. DANS LE DOUTE UTILISEZ LE SITE OFFICIEL.**
+
+**The government updated their website and the generated QRcode from the app no longer matches that of the official website: the text content is the same but the apparence is slightly different. IN DOUBT JUST USE THE OFFICIAL VERSION.**
+
 ## Installation
 
-[Version 1.0.3](https://github.com/guisalmon/pirate_sheep/blob/1.0.3/app/release/app-release.apk)
+[Version 1.0.4](https://github.com/guisalmon/pirate_sheep/blob/1.0.4/app/release/app-release.apk)
 
 >L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. Le QR code correspond au format utilisé par le site governemental.
 >
