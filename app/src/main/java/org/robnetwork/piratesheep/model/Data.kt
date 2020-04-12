@@ -81,19 +81,9 @@ data class MainData(
                     it.getStringSet(PATH_SET, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
                 ).apply {
                     this.list.clear()
-                    this.list.addAll(pathSet.map { fileName ->
-                        try {
-                            ListItemData.listItemData(
-                                loadBitmap(context, ListItemData.page1FileName(fileName)),
-                                loadBitmap(context, ListItemData.page2FileName(fileName)),
-                                loadBitmap(context, ListItemData.qrCodeFileName(fileName)),
-                                fileName,
-                                true
-                            )
-                        } catch (e: Exception) {
-                            return@map null
-                        }
-                    }.filterNotNull().toMutableList())
+                    this.list.addAll(pathSet.mapNotNull { fileName ->
+                        ListItemData.listItemData(context, fileName)
+                    }.toMutableList())
                 }
             }.apply { onDataLoadedListener(this) }
         }
@@ -108,9 +98,6 @@ data class MainData(
             deleteBitmap(context, ListItemData.qrCodeFileName(listItemData.fileName))
         }
 
-        private fun loadBitmap(context: Context, fileName: String) =
-            BitmapFactory.decodeStream(context.openFileInput(fileName))
-
         private fun saveBitmap(context: Context, bitmap: Bitmap, fileName: String) =
             context.openFileOutput(fileName, Context.MODE_PRIVATE).let{
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 85, it)
@@ -122,12 +109,12 @@ data class MainData(
     }
 }
 
-data class ListItemData(
+data class ListItemData (
     val page1: Bitmap,
     val page2: Bitmap,
     val code: Bitmap,
     val fileName: String
-) {
+): BaseData {
     var toDelete = false
     var stored = false
     companion object {
@@ -135,9 +122,23 @@ data class ListItemData(
         fun page2FileName(fileName: String) = fileName.replace(".pdf", "_page2")
         fun qrCodeFileName(fileName: String) = fileName.replace(".pdf", "_qrCode")
 
-        fun listItemData(page1: Bitmap?, page2: Bitmap?, code: Bitmap?, fileName: String?, stored: Boolean) =
+        fun listItemData(context: Context, fileName: String) = try {
+            listItemData(
+                loadBitmap(context, page1FileName(fileName)),
+                loadBitmap(context, page2FileName(fileName)),
+                loadBitmap(context, qrCodeFileName(fileName)),
+                fileName
+            )
+        } catch (e: Exception) {
+            null
+        }
+
+        private fun listItemData(page1: Bitmap?, page2: Bitmap?, code: Bitmap?, fileName: String?) =
             if (page1 != null && page2 != null && code != null && fileName != null)
-                ListItemData(page1, page2, code, fileName).apply { this.stored = stored }
+                ListItemData(page1, page2, code, fileName).apply { stored = true }
             else null
+
+        private fun loadBitmap(context: Context, fileName: String) =
+            BitmapFactory.decodeStream(context.openFileInput(fileName))
     }
 }

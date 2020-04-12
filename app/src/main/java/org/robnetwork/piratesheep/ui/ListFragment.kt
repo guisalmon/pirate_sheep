@@ -1,6 +1,7 @@
 package org.robnetwork.piratesheep.ui
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,10 @@ class ListFragment : BaseFragment<FragmentListBinding, MainData, MainViewModel>(
     override fun setupUI(binding: FragmentListBinding, context: Context) {
         super.setupUI(binding, context)
         binding.listRecycler.layoutManager = LinearLayoutManager(context)
-        binding.listRecycler.adapter = ListItemAdapter({
-            //TODO
+        binding.listRecycler.adapter = ListItemAdapter({ item ->
+            startActivity(Intent(context, AttestationActivity::class.java).apply {
+                putExtra(AttestationActivity.EXTRA_FILENAME, item.fileName)
+            })
         }, { deleteMode ->
             viewModel.data.value?.let {
                 viewModel.data.value = it.copy(deleteMode = deleteMode)

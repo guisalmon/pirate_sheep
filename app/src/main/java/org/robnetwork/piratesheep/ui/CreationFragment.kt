@@ -70,12 +70,10 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     }
 
     override fun updateUI(binding: FragmentCreationBinding, data: MainData) {
-        binding?.let {
-            it.birthdayEdit.text = data.birthday
-            it.dateEdit.text = data.date
-            it.timeEdit.text = data.time
-            it.qrcodeFab.isClickable = data.isValid()
-        }
+        binding.birthdayEdit.text = data.birthday
+        binding.dateEdit.text = data.date
+        binding.timeEdit.text = data.time
+        binding.qrcodeFab.isClickable = data.isValid()
     }
 
     private fun setupBirthday(birthdayBtn: Button, cal: Calendar, context: Context) {

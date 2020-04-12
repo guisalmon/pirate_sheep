@@ -1,13 +1,13 @@
 package org.robnetwork.piratesheep.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import org.robnetwork.piratesheep.model.BaseData
 
 abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewModel<D>> :
