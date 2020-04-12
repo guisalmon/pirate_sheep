@@ -30,8 +30,8 @@ abstract class BaseActivity<B : ViewDataBinding, D : BaseData, VM : BaseViewMode
     @CallSuper
     protected open fun setupUI(binding: B) {
         this.binding = binding
-        viewModel.registerObserver(this, Observer { updateUI(it) })
+        viewModel.registerObserver(this, Observer { updateUI(binding, it) })
     }
 
-    abstract fun updateUI(data: D)
+    abstract fun updateUI(binding: B, data: D)
 }

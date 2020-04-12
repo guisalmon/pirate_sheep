@@ -21,27 +21,31 @@ class ListFragment : BaseFragment<FragmentListBinding, MainData, MainViewModel>(
 
     override fun setupUI(binding: FragmentListBinding, context: Context) {
         super.setupUI(binding, context)
-        binding.imagePager.visibility = View.GONE
         binding.listRecycler.layoutManager = LinearLayoutManager(context)
+        binding.listRecycler.adapter = ListItemAdapter({
+            //TODO
+        }, { deleteMode ->
+            viewModel.data.value?.let {
+                viewModel.data.value = it.copy(deleteMode = deleteMode)
+            }
+        }, { selectionToDelete ->
+            viewModel.update { it.copy(selectionToDelete = selectionToDelete) }
+        })
     }
 
     override fun updateUI(binding: FragmentListBinding, data: MainData) {
-        binding.listRecycler.adapter = ListItemAdapter(data.list, {
-
-        }, { item ->
-            viewModel.data.value?.let {
-                viewModel.data.value = it.copy(list = it.list.apply { remove(item) },
-                    pathSet = it.pathSet.apply { remove(item.fileName) })
-            }
-        })
+        (binding.listRecycler.adapter as? ListItemAdapter)?.update(data)
     }
 }
 
 class ListItemAdapter(
-    private val data: MutableList<ListItemData>,
     private val onItemClick: (ListItemData) -> Unit,
-    private val onItemLongClick: (ListItemData) -> Unit
+    private val onDeleteModeChanged: (Boolean) -> Unit,
+    private val onItemCheckChanged: (MutableList<ListItemData>) -> Unit
 ) : RecyclerView.Adapter<ListItemAdapter.ListItemVH>() {
+    private val data: MutableList<ListItemData> = mutableListOf()
+    private var selectionMode: Boolean = false
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemVH(
@@ -54,23 +58,45 @@ class ListItemAdapter(
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: ListItemVH, position: Int) =
-        holder.bind(data[position], onItemClick, onItemLongClick)
+    override fun onBindViewHolder(holder: ListItemVH, position: Int) {
+        holder.bind(data[position], selectionMode, onItemClick, {
+            onDeleteModeChanged(!selectionMode)
+        }, { checkedItem, isChecked ->
+            data.indexOf(checkedItem).let { index ->
+                data[index].toDelete = isChecked
+            }
+            onItemCheckChanged(data.filter { it.toDelete }.toMutableList())
+        })
+    }
 
+    fun update(mainData: MainData) {
+        data.clear()
+        data.addAll(mainData.list)
+        selectionMode = mainData.deleteMode
+        notifyDataSetChanged()
+    }
 
     inner class ListItemVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding: ListItemAttestationBinding? = DataBindingUtil.bind(itemView)
 
         fun bind(
-            itemData: ListItemData,
+            item: ListItemData,
+            selectionMode: Boolean,
             onItemClick: (ListItemData) -> Unit,
-            onItemLongClick: (ListItemData) -> Unit
+            onItemLongClick: (ListItemData) -> Unit,
+            onItemSelected: (ListItemData, Boolean) -> Unit
         ) {
             binding?.let {
-                it.itemLabel.text = itemData.fileName
-                it.qrcodeView.setImageBitmap(itemData.code)
-                it.itemContainer.setOnClickListener { onItemClick(itemData) }
-                it.itemContainer.setOnLongClickListener { onItemLongClick(itemData).let { true } }
+                it.itemCheckbox.setOnCheckedChangeListener(null)
+                it.itemLabel.text = item.fileName
+                it.qrcodeView.setImageBitmap(item.code)
+                if (selectionMode) it.itemCheckbox.isChecked = item.toDelete
+                it.itemCheckbox.visibility = if (selectionMode) View.VISIBLE else View.GONE
+                it.itemContainer.setOnClickListener { onItemClick(item) }
+                it.itemContainer.setOnLongClickListener { onItemLongClick(item).let { true } }
+                it.itemCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                    onItemSelected(item, isChecked)
+                }
             }
         }
     }

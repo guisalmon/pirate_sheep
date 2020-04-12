@@ -52,7 +52,7 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/size_02"
             app:layout_constraintBottom_toTopOf="@id/item_sub_label"
-            app:layout_constraintEnd_toStartOf="@id/itemMarginEnd"
+            app:layout_constraintEnd_toStartOf="@id/item_checkbox"
             app:layout_constraintStart_toEndOf="@id/qrcode_view"
             app:layout_constraintTop_toBottomOf="@id/itemMarginTop"
             app:layout_constraintVertical_weight="1" />
@@ -62,10 +62,18 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/itemMarginBottom"
-            app:layout_constraintEnd_toStartOf="@id/itemMarginEnd"
+            app:layout_constraintEnd_toStartOf="@id/item_checkbox"
             app:layout_constraintStart_toEndOf="@id/qrcode_view"
             app:layout_constraintTop_toBottomOf="@id/item_label"
             app:layout_constraintVertical_weight="1" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/item_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/itemMarginEnd"
+            app:layout_constraintTop_toBottomOf="@id/itemMarginTop"
+            app:layout_constraintBottom_toTopOf="@+id/itemMarginBottom"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.preference.PreferenceManager
+import java.lang.Exception
 
 interface BaseData
 
@@ -23,7 +24,9 @@ data class MainData(
     val pathSet: MutableSet<String> = mutableSetOf(),
     val timeStamp: String? = null,
     val lastItem: ListItemData? = null,
-    val list: MutableList<ListItemData> = mutableListOf()
+    val list: MutableList<ListItemData> = mutableListOf(),
+    val selectionToDelete: MutableList<ListItemData> = mutableListOf(),
+    val deleteMode: Boolean = false
 ) : BaseData {
     companion object {
         private const val FIRSTNAME: String = "firstName"
@@ -78,16 +81,29 @@ data class MainData(
                 ).apply {
                     this.list.clear()
                     this.list.addAll(pathSet.map { fileName ->
-                        val page1 = loadBitmap(context, ListItemData.page1FileName(fileName))
-                        ListItemData.listItemData(
-                            page1,
-                            loadBitmap(context, ListItemData.page2FileName(fileName)),
-                            loadBitmap(context, ListItemData.qrCodeFileName(fileName)),
-                            fileName
-                        )
+                        try {
+                            ListItemData.listItemData(
+                                loadBitmap(context, ListItemData.page1FileName(fileName)),
+                                loadBitmap(context, ListItemData.page2FileName(fileName)),
+                                loadBitmap(context, ListItemData.qrCodeFileName(fileName)),
+                                fileName
+                            )
+                        } catch (e: Exception) {
+                            return@map null
+                        }
                     }.filterNotNull().toMutableList())
                 }
             }.apply { onDataLoadedListener(this) }
+        }
+
+        fun deleteSelectionFromCache(context: Context, data: MainData) {
+            data.selectionToDelete.forEach { deleteFromCache(context, it) }
+        }
+
+        private fun deleteFromCache(context: Context, listItemData: ListItemData) {
+            deleteBitmap(context, ListItemData.page1FileName(listItemData.fileName))
+            deleteBitmap(context, ListItemData.page2FileName(listItemData.fileName))
+            deleteBitmap(context, ListItemData.qrCodeFileName(listItemData.fileName))
         }
 
         private fun loadBitmap(context: Context, fileName: String) =
@@ -99,6 +115,8 @@ data class MainData(
                 it.flush()
                 it.close()
             }
+
+        private fun deleteBitmap(context: Context, fileName: String) = context.deleteFile(fileName)
     }
 }
 
@@ -108,6 +126,7 @@ data class ListItemData(
     val code: Bitmap,
     val fileName: String
 ) {
+    var toDelete = false
     companion object {
         fun page1FileName(fileName: String) = fileName.replace(".pdf", "_page1")
         fun page2FileName(fileName: String) = fileName.replace(".pdf", "_page2")

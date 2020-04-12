@@ -2,7 +2,6 @@ package org.robnetwork.piratesheep.ui
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import androidx.annotation.StringRes
@@ -107,6 +106,16 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                     data.value = it.copy(pathSet = it.pathSet.apply { add(lastItem.fileName) })
                 }
             }
+        }
+    }
+
+    fun deleteForms(context: Context) {
+        data.value?.let { mainData ->
+            MainData.deleteSelectionFromCache(context, mainData)
+            val lastItem = mainData.lastItem.takeUnless { mainData.selectionToDelete.contains(it) }
+            val list = mainData.list.filterNot { mainData.selectionToDelete.contains(it) }
+            val pathSet = list.map { it.fileName }.toMutableSet()
+            data.value = mainData.copy(pathSet = pathSet, lastItem = lastItem, list = list.toMutableList(), deleteMode = false, selectionToDelete = mutableListOf())
         }
     }
 

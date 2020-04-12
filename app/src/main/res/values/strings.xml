@@ -26,4 +26,5 @@
     <string name="desc_qr_fab">Generate document</string>
     <string name="bottom_nav_form">Form</string>
     <string name="bottom_nav_list">Attestations</string>
+    <string name="toolbar_delete">Delete</string>
 </resources>
