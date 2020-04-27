@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">প্রথম নাম</string>
+    <string name="main_last_name">নামের শেষাংশ</string>
+    <string name="main_birthday">জন্মদিন</string>
+    <string name="main_birth_place">জায়গা</string>
+    <string name="main_address">ঠিকানা</string>
+    <string name="main_city">শহর</string>
+    <string name="main_code">ডাক কোড</string>
+    <string name="main_reason">কারণ</string>
+    <string name="main_place">তৈরি</string>
+    <string name="main_date">তারিখ</string>
+    <string name="main_time">সময়</string>
+    <string name="reason_pro">কাজ</string>
+    <string name="reason_groceries">মুদীখানার পণ্যদ্রব্য</string>
+    <string name="reason_medical">শিক্ষক</string>
+    <string name="reason_help">সহায়তা</string>
+    <string name="reason_leisure">খেলাধুলা</string>
+    <string name="reason_legal">বিচারসংক্রান্ত</string>
+    <string name="reason_tig">সাধারণ আগ্রহ</string>
+    <string name="desc_qr_fab">নথিটি তৈরি করুন</string>
+</resources>

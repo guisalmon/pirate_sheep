@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Имя</string>
+    <string name="main_last_name">Фамилия</string>
+    <string name="main_birthday">Дата рождения</string>
+    <string name="main_birth_place">Место рождения</string>
+    <string name="main_address">Адрес</string>
+    <string name="main_city">город</string>
+    <string name="main_code">Почтовый индекс</string>
+    <string name="main_reason">причина</string>
+    <string name="main_place">Место</string>
+    <string name="main_date">дата</string>
+    <string name="main_time">час</string>
+    <string name="reason_pro">работа</string>
+    <string name="reason_groceries">бакалейные товары</string>
+    <string name="reason_medical">медицинская</string>
+    <string name="reason_help">помощь</string>
+    <string name="reason_leisure">спорт</string>
+    <string name="reason_legal">судебная</string>
+    <string name="reason_tig">Общий интерес</string>
+    <string name="desc_qr_fab">Генерация документа</string>
+</resources>

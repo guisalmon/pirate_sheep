@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">الاسم الأول</string>
+    <string name="main_last_name">الاسم</string>
+    <string name="main_birthday">الولادة</string>
+    <string name="main_birth_place">مكان</string>
+    <string name="main_address">العنوان</string>
+    <string name="main_city">المدينة</string>
+    <string name="main_code">الرقم البريدي</string>
+    <string name="main_reason">السبب</string>
+    <string name="main_place">تم في</string>
+    <string name="main_date">التاريخ</string>
+    <string name="main_time">ساعة</string>
+    <string name="reason_pro">عمل</string>
+    <string name="reason_groceries">البقالة</string>
+    <string name="reason_medical">طبي</string>
+    <string name="reason_help">مساعدة</string>
+    <string name="reason_leisure">رياضة</string>
+    <string name="reason_legal">عدالة</string>
+    <string name="reason_tig">المنفعة العامة</string>
+    <string name="desc_qr_fab">قم بإنشاء المستند</string>
+</resources>

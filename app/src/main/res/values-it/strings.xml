@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Conome</string>
+    <string name="main_last_name">Cognome</string>
+    <string name="main_birthday">Nato/a il</string>
+    <string name="main_birth_place">A</string>
+    <string name="main_address">Domiciliato/a a</string>
+    <string name="main_city">Città</string>
+    <string name="main_code">Codice postale</string>
+    <string name="main_reason">Ragione</string>
+    <string name="main_place">Fatto a</string>
+    <string name="main_date">Data</string>
+    <string name="main_time">Ora</string>
+    <string name="reason_pro">Lavoro</string>
+    <string name="reason_groceries">Drogheria</string>
+    <string name="reason_medical">Medico</string>
+    <string name="reason_help">Assistenza</string>
+    <string name="reason_leisure">Sport</string>
+    <string name="reason_legal">Giudiziario</string>
+    <string name="reason_tig">Interesse generale</string>
+    <string name="desc_qr_fab">Genera il documento</string>
+</resources>

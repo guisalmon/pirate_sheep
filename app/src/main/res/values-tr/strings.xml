@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">İlk isim</string>
+    <string name="main_last_name">Soyadı</string>
+    <string name="main_birthday">Doğum Yılı</string>
+    <string name="main_birth_place">Doğum yeri</string>
+    <string name="main_address">İkametgâhı</string>
+    <string name="main_city">şehir</string>
+    <string name="main_code">Posta kodu</string>
+    <string name="main_reason">neden</string>
+    <string name="main_place">YER</string>
+    <string name="main_date">TARIH</string>
+    <string name="main_time">SAAT</string>
+    <string name="reason_groceries">iş</string>
+    <string name="reason_medical">tıbbi</string>
+    <string name="reason_help">yardım</string>
+    <string name="reason_leisure">spor</string>
+    <string name="reason_legal">adli</string>
+    <string name="reason_tig">Genel ilgi</string>
+    <string name="desc_qr_fab">Belgeyi oluşturun</string>
+</resources>

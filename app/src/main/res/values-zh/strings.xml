@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">名</string>
+    <string name="main_last_name">姓氏</string>
+    <string name="main_birthday">出生日期</string>
+    <string name="main_birth_place">所在位置</string>
+    <string name="main_address">住址</string>
+    <string name="main_city">城市名</string>
+    <string name="main_code">邮递区号</string>
+    <string name="main_reason">原因</string>
+    <string name="main_place">完成</string>
+    <string name="main_date">日期</string>
+    <string name="main_time">时间</string>
+    <string name="reason_pro">工作</string>
+    <string name="reason_groceries">杂货</string>
+    <string name="reason_medical">医生</string>
+    <string name="reason_help">救命</string>
+    <string name="reason_leisure">运动</string>
+    <string name="reason_legal">公义</string>
+    <string name="reason_tig">一般利益</string>
+    <string name="desc_qr_fab">建立文件</string>
+</resources>

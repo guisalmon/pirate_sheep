@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Keresztnév</string>
+    <string name="main_last_name">Vezetéknév</string>
+    <string name="main_birthday">Születési dàtu</string>
+    <string name="main_birth_place">Hely</string>
+    <string name="main_address">Cím</string>
+    <string name="main_city">Város</string>
+    <string name="main_code">Irányítószám</string>
+    <string name="main_reason">Ok</string>
+    <string name="main_place">Készitett: (város)</string>
+    <string name="main_date">Dátum</string>
+    <string name="main_time">Idő</string>
+    <string name="reason_pro">Munka</string>
+    <string name="reason_groceries">Élelmiszer</string>
+    <string name="reason_medical">Orvosi</string>
+    <string name="reason_help">Támogatás</string>
+    <string name="reason_leisure">Sport</string>
+    <string name="reason_legal">Bírósági</string>
+    <string name="reason_tig">Általános érdek</string>
+    <string name="desc_qr_fab">Generálja a dokumentumot</string>
+</resources>
