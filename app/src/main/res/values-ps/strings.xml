@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">لومړی نوم</string>
+    <string name="main_last_name">تخلص</string>
+    <string name="main_birthday">د زیږیدو نیټه</string>
+    <string name="main_birth_place">ځای</string>
+    <string name="main_address">پته</string>
+    <string name="main_city">ښار</string>
+    <string name="main_code">پوستي کوډ</string>
+    <string name="main_reason">دلیل</string>
+    <string name="main_place">جوړ شوی</string>
+    <string name="main_date">نیټه</string>
+    <string name="main_time">وخت</string>
+    <string name="reason_pro">دنده</string>
+    <string name="reason_groceries">راټولول</string>
+    <string name="reason_medical">طبي</string>
+    <string name="reason_help">مرسته</string>
+    <string name="reason_leisure">سپورت</string>
+    <string name="reason_legal">قضایی</string>
+    <string name="reason_tig">عمومي ګټه</string>
+    <string name="desc_qr_fab">لاسوند جوړ کړئ</string>
+</resources>
