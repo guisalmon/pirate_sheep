@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Tên</string>
+    <string name="main_last_name">Họ</string>
+    <string name="main_birthday">Sinh ngày</string>
+    <string name="main_birth_place">Ở</string>
+    <string name="main_address">Nơi cư trú</string>
+    <string name="main_city">Thành phố</string>
+    <string name="main_code">Mã bưu điện</string>
+    <string name="main_reason">Lý do</string>
+    <string name="main_place">Làm tại</string>
+    <string name="main_date">Ngày</string>
+    <string name="main_time">giờ</string>
+    <string name="reason_pro">việc làm</string>
+    <string name="reason_groceries">Cửa hàng tạp hóa</string>
+    <string name="reason_medical">Y khoa</string>
+    <string name="reason_help">Hỗ trợ</string>
+    <string name="reason_leisure">thể thao</string>
+    <string name="reason_legal">tư pháp</string>
+    <string name="reason_tig">Lợi ích chung</string>
+    <string name="desc_qr_fab">Tạo tài liệu</string>
+</resources>
