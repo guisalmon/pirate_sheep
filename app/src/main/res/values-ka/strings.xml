@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">ახელი</string>
+    <string name="main_last_name">არცერთი</string>
+    <string name="main_birthday">დაბადებული (თარიღი : რიცხვი/თვე/წელი)</string>
+    <string name="main_birth_place">ლიუ</string>
+    <string name="main_address">ადრესატი</string>
+    <string name="main_city">ვილი</string>
+    <string name="main_code">საფოსტო კოდი</string>
+    <string name="main_reason">რაიონი</string>
+    <string name="main_place">შესრულებულია (ქალაქი)</string>
+    <string name="main_date">თარიღი</string>
+    <string name="main_time">დრო</string>
+    <string name="reason_pro">სამუშაო</string>
+    <string name="reason_groceries">სასურსათო მაღაზიები</string>
+    <string name="reason_medical">სამედიცინო</string>
+    <string name="reason_help">დახმარება</string>
+    <string name="reason_leisure">სპორტი</string>
+    <string name="reason_legal">სამართლიანობა</string>
+    <string name="reason_tig">ზოგადი ინტერესი</string>
+    <string name="desc_qr_fab">შექმენით დოკუმენტი</string>
+</resources>
