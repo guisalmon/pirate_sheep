@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Nombre de pila</string>
+    <string name="main_last_name">Apellido</string>
+    <string name="main_birthday">Nacido(a)</string>
+    <string name="main_birth_place">Lugar</string>
+    <string name="main_address">Dirección</string>
+    <string name="main_city">Ciudad</string>
+    <string name="main_code">Código postal</string>
+    <string name="main_reason">Razón</string>
+    <string name="main_place">Hecho en</string>
+    <string name="main_date">Fecha</string>
+    <string name="main_time">Hora</string>
+    <string name="reason_pro">Trabajo</string>
+    <string name="reason_groceries">Comestibles</string>
+    <string name="reason_medical">Médico</string>
+    <string name="reason_help">Ayudar</string>
+    <string name="reason_leisure">Deporte</string>
+    <string name="reason_legal">Judicial</string>
+    <string name="reason_tig">Interés público</string>
+    <string name="desc_qr_fab">Generar el documento</string>
+</resources>
