@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Prenume</string>
+    <string name="main_last_name">Numele de familie</string>
+    <string name="main_birthday">Născutpe</string>
+    <string name="main_birth_place">Localitatea de nastere</string>
+    <string name="main_address">Domiciuliu actual</string>
+    <string name="main_city">Oraș</string>
+    <string name="main_code">Cod poștal</string>
+    <string name="main_reason">Motiv</string>
+    <string name="main_place">Încheiat la(Indicati localitatea)</string>
+    <string name="main_date">Data</string>
+    <string name="main_time">Ora</string>
+    <string name="reason_pro">Loc de munca</string>
+    <string name="reason_groceries">Băcănie</string>
+    <string name="reason_medical">Medical</string>
+    <string name="reason_help">Asistență</string>
+    <string name="reason_leisure">Sportiv</string>
+    <string name="reason_legal">Judiciar</string>
+    <string name="reason_tig">Interes general</string>
+    <string name="desc_qr_fab">Generați documentul</string>
+</resources>
