@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_first_name">Vorname</string>
+    <string name="main_last_name">Nachname</string>
+    <string name="main_birthday">Geboren am</string>
+    <string name="main_birth_place">In</string>
+    <string name="main_address">Wohnort</string>
+    <string name="main_city">Stadt</string>
+    <string name="main_code">Postleitzahl</string>
+    <string name="main_reason">Grund</string>
+    <string name="main_place">Ont</string>
+    <string name="main_date">Datum</string>
+    <string name="main_time">Uhrzeit</string>
+    <string name="reason_pro">Arbeit</string>
+    <string name="reason_groceries">Lebensmittel</string>
+    <string name="reason_medical">Medizinisch</string>
+    <string name="reason_help">Hilfe</string>
+    <string name="reason_leisure">Sport</string>
+    <string name="reason_legal">Justiz</string>
+    <string name="reason_tig">Allgemeines Interesse</string>
+    <string name="desc_qr_fab">Generieren Sie das Dokument</string>
+</resources>
