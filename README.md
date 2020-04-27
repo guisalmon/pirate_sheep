@@ -75,6 +75,11 @@ There isn't anything illegal in reproducing this attestation. It is allowed to d
 
 ## Installation
 
+[Version 1.0.6](https://github.com/guisalmon/pirate_sheep/blob/1.0.6/app/release/app-release.apk)
+
+>Ajout de langues / Languages added : العربية, 中文, Português, ქართული ენა, Castillano, Magyar nyelv, Русский, Polski, Tiếng Việt, Türkçe, Româneşte, বাংলা, پښتو, Italiano, Deutsch
+>
+
 [Version 1.0.5](https://github.com/guisalmon/pirate_sheep/blob/1.0.5/app/release/app-release.apk)
 
 >L'app remplit le formulaire avec les infos fournies et le sauvegarde sur le téléphone au format pdf. Le QRcode ne correspond pas tout à fait à la version officielle. L'app permet de lister et d'afficher les attestations précédemment générées.
