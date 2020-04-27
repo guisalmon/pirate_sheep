@@ -10,13 +10,13 @@
     <string name="main_reason">Ragione</string>
     <string name="main_place">Fatto a</string>
     <string name="main_date">Data</string>
-    <string name="main_time">ora</string>
-    <string name="reason_pro">lavoro</string>
-    <string name="reason_groceries">drogheria</string>
-    <string name="reason_medical">medico</string>
-    <string name="reason_help">assistenza</string>
-    <string name="reason_leisure">sport</string>
-    <string name="reason_legal">giudiziario</string>
-    <string name="reason_tig">interesse generale</string>
+    <string name="main_time">Ora</string>
+    <string name="reason_pro">Lavoro</string>
+    <string name="reason_groceries">Drogheria</string>
+    <string name="reason_medical">Medico</string>
+    <string name="reason_help">Assistenza</string>
+    <string name="reason_leisure">Sport</string>
+    <string name="reason_legal">Giudiziario</string>
+    <string name="reason_tig">Interesse generale</string>
     <string name="desc_qr_fab">Genera il documento</string>
 </resources>
