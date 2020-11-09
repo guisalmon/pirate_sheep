@@ -116,20 +116,12 @@
                     app:layout_constraintTop_toBottomOf="@id/code_label" />
 
                 <TextView
-                    android:id="@+id/place_label"
-                    style="@style/Text.Label"
-                    android:text="@string/main_place"
-                    app:layout_constraintEnd_toStartOf="@+id/separator"
-                    app:layout_constraintStart_toStartOf="@+id/marginStart"
-                    app:layout_constraintTop_toBottomOf="@id/reason_label" />
-
-                <TextView
                     android:id="@+id/date_label"
                     style="@style/Text.Label"
                     android:text="@string/main_date"
                     app:layout_constraintEnd_toStartOf="@+id/separator"
                     app:layout_constraintStart_toStartOf="@+id/marginStart"
-                    app:layout_constraintTop_toBottomOf="@id/place_label" />
+                    app:layout_constraintTop_toBottomOf="@id/reason_label" />
 
                 <TextView
                     android:id="@+id/time_label"
@@ -217,16 +209,6 @@
                     app:layout_constraintStart_toStartOf="@id/separator"
                     app:layout_constraintTop_toBottomOf="@+id/code_edit"/>
 
-                <EditText
-                    android:id="@+id/place_edit"
-                    style="@style/Text.Edit"
-                    android:autofillHints=""
-                    android:hint="@string/main_place"
-                    android:inputType="textCapWords"
-                    app:layout_constraintEnd_toStartOf="@id/marginEnd"
-                    app:layout_constraintStart_toStartOf="@id/separator"
-                    app:layout_constraintTop_toBottomOf="@id/reason_edit" />
-
                 <Button
                     android:id="@+id/date_edit"
                     style="@style/Text.Edit"
@@ -235,7 +217,7 @@
                     android:text="@string/main_date"
                     app:layout_constraintEnd_toStartOf="@id/marginEnd"
                     app:layout_constraintStart_toStartOf="@id/separator"
-                    app:layout_constraintTop_toBottomOf="@+id/place_edit" />
+                    app:layout_constraintTop_toBottomOf="@+id/reason_edit" />
 
                 <Button
                     android:id="@+id/time_edit"

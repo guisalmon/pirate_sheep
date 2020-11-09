@@ -47,7 +47,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                 density,
                 FormField(it.address + " " + it.code + " " + it.city, 274, 395)
             )
-            formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 217, 1380))
+            formBitmap.writeTextOnBitmap(density, FormField(it.city + "", 217, 1380))
             formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 187, 1429))
             formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 549, 1429))
             it.reasonIndexes.map { index -> Reasons.reasonByIndex(index) }.forEach { reason ->

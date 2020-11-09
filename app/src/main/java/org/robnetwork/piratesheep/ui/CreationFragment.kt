@@ -38,7 +38,6 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             binding.addressEdit.setText(it.address)
             binding.cityEdit.setText(it.city)
             binding.codeEdit.setText(it.code)
-            binding.placeEdit.setText(it.place)
             updateUI(binding, it)
         }
 
@@ -60,7 +59,6 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
         binding.addressEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(address = t.nullIfEmpty()) } }
         binding.cityEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(city = t.nullIfEmpty()) } }
         binding.codeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(code = t.nullIfEmpty()) } }
-        binding.placeEdit.doOnTextChanged { t, _, _, _ -> viewModel.update { it.copy(place = t.nullIfEmpty()) } }
         binding.qrcodeFab.setOnClickListener {
             viewModel.generateForm(context) { lastDoc ->
                 createPdf(lastDoc?.fileName)
@@ -193,7 +191,6 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             && !code.isNullOrBlank()
             && !reason.isNullOrEmpty()
             && !reasonIndexes.isNullOrEmpty()
-            && !place.isNullOrBlank()
             && !date.isNullOrBlank()
             && !time.isNullOrBlank()
 

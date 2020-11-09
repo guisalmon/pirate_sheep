@@ -18,7 +18,6 @@ data class MainData(
     val code: String? = null,
     val reason: MutableSet<String> = mutableSetOf(),
     val reasonIndexes: MutableSet<Int> = mutableSetOf(),
-    val place: String? = null,
     val date: String? = null,
     val time: String? = null,
     val pathSet: MutableSet<String> = mutableSetOf(),
@@ -38,7 +37,6 @@ data class MainData(
         private const val CODE: String = "code"
         private const val REASON: String = "reasons"
         private const val REASON_INDEX: String = "reasonIndexes"
-        private const val PLACE: String = "place"
         private const val PATH_SET: String = "paths"
 
         fun storeData(context: Context, data: MainData) {
@@ -58,7 +56,6 @@ data class MainData(
                 .putString(CODE, data.code)
                 .putStringSet(REASON, data.reason)
                 .putStringSet(REASON_INDEX, data.reasonIndexes.map { it.toString() }.toMutableSet())
-                .putString(PLACE, data.place)
                 .putStringSet(PATH_SET, data.pathSet)
                 .apply()
         }
@@ -75,7 +72,6 @@ data class MainData(
                     it.getString(CODE, null),
                     it.getStringSet(REASON, mutableSetOf())?.toMutableSet() ?: mutableSetOf(),
                     it.getStringSet(REASON_INDEX, mutableSetOf())?.map { index -> index.toInt() }?.toMutableSet() ?: mutableSetOf(),
-                    it.getString(PLACE, null),
                     null,
                     null,
                     it.getStringSet(PATH_SET, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
