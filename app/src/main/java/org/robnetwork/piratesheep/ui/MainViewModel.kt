@@ -39,37 +39,23 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
 
             formBitmap.writeTextOnBitmap(
                 density,
-                FormField(it.firstName + " " + it.lastName, 257, 327)
+                FormField(it.firstName + " " + it.lastName, 247, 308)
             )
-            formBitmap.writeTextOnBitmap(density, FormField(it.birthday + "", 257, 377))
-            formBitmap.writeTextOnBitmap(density, FormField(it.birthPlace + "", 191, 425))
+            formBitmap.writeTextOnBitmap(density, FormField(it.birthday + "", 247, 351))
+            formBitmap.writeTextOnBitmap(density, FormField(it.birthPlace + "", 617, 351))
             formBitmap.writeTextOnBitmap(
                 density,
-                FormField(it.address + " " + it.code + " " + it.city, 280, 478)
+                FormField(it.address + " " + it.code + " " + it.city, 274, 397)
             )
-            formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
-            formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
-            formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
+            formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 217, 1388))
+            formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 187, 1439))
+            formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 549, 1439))
             Reasons.reasonByIndex(it.reasonIndex)?.let { reason ->
                 formBitmap.writeTextOnBitmap(density, FormField("X", reason.x, reason.y, 40))
             }
             formBitmap.let { bitmap ->
-                ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 873, 1211, density)
+                ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 908, 1553, density)
             }
-            formBitmap.writeTextOnBitmap(
-                density,
-                FormField(context.getString(R.string.timestamp_1), 1077, 1441, 14, false)
-            )
-            formBitmap.writeTextOnBitmap(
-                density,
-                FormField(
-                    context.getString(R.string.timestamp_2, it.date, it.time),
-                    1077,
-                    1455,
-                    14,
-                    false
-                )
-            )
             formBitmap2.let { bitmap ->
                 ImageUtils.setBackgroundWhite(bitmap)
                 ImageUtils.writeQrCodeToCanvas(qrCodeBig, bitmap, 70, 70, density)
@@ -165,13 +151,15 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
         val y: Int, @StringRes val textRes: Int,
         val keyword: String
     ) {
-        PRO(0, 157, 658, R.string.reason_pro, "travail"),
-        GROCERIES(1, 157, 762, R.string.reason_groceries, "courses"),
-        MEDICAL(2, 157, 847, R.string.reason_medical, "sante"),
-        HELP(3, 157, 923, R.string.reason_help, "famille"),
-        LEISURE(4, 157, 1039, R.string.reason_leisure, "sport"),
-        LEGAL(5, 157, 1135, R.string.reason_legal, "judiciaire"),
-        TIG(6, 157, 1212, R.string.reason_tig, "missions");
+        PRO(0, 160, 552, R.string.reason_pro, "travail"),
+        GROCERIES(1, 160, 647, R.string.reason_groceries, "achats"),
+        MEDICAL(2, 160, 762, R.string.reason_medical, "sante"),
+        HELP(3, 160, 850, R.string.reason_help, "famille"),
+        HANDICAP(4, 160, 933, R.string.reason_help, "handicap"),
+        LEISURE(5, 160, 1014, R.string.reason_leisure, "sport_animaux"),
+        LEGAL(6, 160, 1145, R.string.reason_legal, "convocation"),
+        TIG(7, 160, 1224, R.string.reason_tig, "missions"),
+        CHILDREN(8, 160, 1315, R.string.reason_tig, "enfants");
 
         fun toReadableText(context: Context) = context.getString(this.textRes)
 
