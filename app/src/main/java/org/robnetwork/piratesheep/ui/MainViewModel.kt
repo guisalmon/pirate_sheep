@@ -34,7 +34,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
             val formBitmap2: Bitmap =
                 Bitmap.createBitmap(formBitmap.width, formBitmap.height, Bitmap.Config.ARGB_8888)
             val density = context.resources.displayMetrics.density
-            val qrCodeSmall = generateQrCode(context, it, density)
+            val qrCodeSmall = generateQrCode(context, it, density * 1.1f)
             val qrCodeBig = generateQrCode(context, it, density * 3)
 
             formBitmap.writeTextOnBitmap(
@@ -56,7 +56,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                 }
             }
             formBitmap.let { bitmap ->
-                ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 908, 1348, density)
+                ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 888, 1328, density)
             }
             formBitmap2.let { bitmap ->
                 ImageUtils.setBackgroundWhite(bitmap)
@@ -127,7 +127,7 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                     reasons.forEachIndexed { index, reason -> reasonsText = "$reasonsText${if (index == 0) reason else ", $reason" }"}
                     return@let reasonsText
                 }
-            ), 233, density
+            ), 200, density
         )
 
     private fun Bitmap.writeTextOnBitmap(density: Float, field: FormField) {
@@ -157,15 +157,15 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
         val y: Int, @StringRes val textRes: Int,
         val keyword: String
     ) {
-        PRO(0, 160, 546, R.string.reason_pro, "travail"),
-        GROCERIES(1, 160, 651, R.string.reason_groceries, "achats"),
-        MEDICAL(2, 160, 756, R.string.reason_medical, "sante"),
-        HELP(3, 160, 832, R.string.reason_help, "famille"),
-        HANDICAP(4, 160, 927, R.string.reason_help, "handicap"),
-        LEISURE(5, 160, 1008, R.string.reason_leisure, "sport_animaux"),
-        LEGAL(6, 160, 1139, R.string.reason_legal, "convocation"),
-        TIG(7, 160, 1218, R.string.reason_tig, "missions"),
-        CHILDREN(8, 160, 1309, R.string.reason_tig, "enfants");
+        PRO(0, 159, 552, R.string.reason_pro, "travail"),
+        GROCERIES(1, 159, 646, R.string.reason_groceries, "achats"),
+        MEDICAL(2, 159, 760, R.string.reason_medical, "sante"),
+        HELP(3, 159, 845, R.string.reason_help, "famille"),
+        HANDICAP(4, 159, 930, R.string.reason_handicap, "handicap"),
+        LEISURE(5, 159, 1009, R.string.reason_leisure, "sport_animaux"),
+        LEGAL(6, 159, 1139, R.string.reason_legal, "convocation"),
+        TIG(7, 159, 1221, R.string.reason_tig, "missions"),
+        CHILDREN(8, 159, 1313, R.string.reason_children, "enfants");
 
         fun toReadableText(context: Context) = context.getString(this.textRes)
 
