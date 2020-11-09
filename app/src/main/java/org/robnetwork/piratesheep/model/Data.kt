@@ -17,7 +17,7 @@ data class MainData(
     val city: String? = null,
     val code: String? = null,
     val reason: MutableSet<String> = mutableSetOf(),
-    val reasonIndex: Int = -1,
+    val reasonIndexes: MutableSet<Int> = mutableSetOf(),
     val place: String? = null,
     val date: String? = null,
     val time: String? = null,
@@ -37,7 +37,7 @@ data class MainData(
         private const val CITY: String = "city"
         private const val CODE: String = "code"
         private const val REASON: String = "reasons"
-        private const val REASON_INDEX: String = "reasonIndex"
+        private const val REASON_INDEX: String = "reasonIndexes"
         private const val PLACE: String = "place"
         private const val PATH_SET: String = "paths"
 
@@ -57,7 +57,7 @@ data class MainData(
                 .putString(CITY, data.city)
                 .putString(CODE, data.code)
                 .putStringSet(REASON, data.reason)
-                .putInt(REASON_INDEX, data.reasonIndex)
+                .putStringSet(REASON_INDEX, data.reasonIndexes.map { it.toString() }.toMutableSet())
                 .putString(PLACE, data.place)
                 .putStringSet(PATH_SET, data.pathSet)
                 .apply()
@@ -74,7 +74,7 @@ data class MainData(
                     it.getString(CITY, null),
                     it.getString(CODE, null),
                     it.getStringSet(REASON, mutableSetOf())?.toMutableSet() ?: mutableSetOf(),
-                    it.getInt(REASON_INDEX, -1),
+                    it.getStringSet(REASON_INDEX, mutableSetOf())?.map { index -> index.toInt() }?.toMutableSet() ?: mutableSetOf(),
                     it.getString(PLACE, null),
                     null,
                     null,

@@ -50,8 +50,10 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
             formBitmap.writeTextOnBitmap(density, FormField(it.place + "", 230, 1285))
             formBitmap.writeTextOnBitmap(density, FormField(it.date + "", 191, 1337))
             formBitmap.writeTextOnBitmap(density, FormField(it.time + "", 415, 1337))
-            Reasons.reasonByIndex(it.reasonIndex)?.let { reason ->
-                formBitmap.writeTextOnBitmap(density, FormField("X", reason.x, reason.y, 40))
+            it.reasonIndexes.map { index -> Reasons.reasonByIndex(index) }.forEach { reason ->
+                reason?.let {
+                    formBitmap.writeTextOnBitmap(density, FormField("X", reason.x, reason.y, 40))
+                }
             }
             formBitmap.let { bitmap ->
                 ImageUtils.writeQrCodeToCanvas(qrCodeSmall, bitmap, 873, 1211, density)
@@ -134,7 +136,11 @@ class MainViewModel(public override val data: MutableLiveData<MainData> = Mutabl
                 data.city,
                 data.date,
                 data.time,
-                data.reason
+                data.reason.let { reasons ->
+                    var reasonsText = ""
+                    reasons.forEachIndexed { index, reason -> reasonsText = "$reasonsText${if (index == 0) reason else ", $reason" }"}
+                    return@let reasonsText
+                }
             ), 233, density
         )
 

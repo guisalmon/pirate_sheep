@@ -138,11 +138,18 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             ) { _, which, isChecked ->
                 viewModel.update {
                     val reasons = it.reason
+                    val reasonIndexes = it.reasonIndexes
                     MainViewModel.Reasons.values()[which].keyword.let { keyword ->
-                        if (isChecked && !reasons.contains(keyword)) reasons.add(keyword)
-                        if (!isChecked && reasons.contains(keyword)) reasons.remove(keyword)
+                        if (isChecked && !reasons.contains(keyword)) {
+                            reasons.add(keyword)
+                            reasonIndexes.add(which)
+                        }
+                        if (!isChecked && reasons.contains(keyword)) {
+                            reasons.remove(keyword)
+                            reasonIndexes.remove(which)
+                        }
                     }
-                    it.copy(reason = reasons)
+                    it.copy(reason = reasons, reasonIndexes = reasonIndexes)
                 }
             }
             .create()
@@ -185,7 +192,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             && !city.isNullOrBlank()
             && !code.isNullOrBlank()
             && !reason.isNullOrEmpty()
-            && reasonIndex != -1
+            && !reasonIndexes.isNullOrEmpty()
             && !place.isNullOrBlank()
             && !date.isNullOrBlank()
             && !time.isNullOrBlank()
