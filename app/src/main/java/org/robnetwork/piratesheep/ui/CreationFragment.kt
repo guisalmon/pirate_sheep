@@ -8,9 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import android.view.View
-import android.view.ViewGroup
-import android.widget.*
-import androidx.annotation.LayoutRes
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import org.robnetwork.piratesheep.R
 import org.robnetwork.piratesheep.databinding.FragmentCreationBinding
@@ -32,7 +31,7 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             setupBirthday(binding.birthdayEdit, cal, context)
             setupDate(binding.dateEdit, cal, context)
             setupTime(binding.timeEdit, cal, context)
-            setupReason(binding.reasonEdit, it.reasonIndex, context)
+            binding.reasonEdit.setOnClickListener { _ -> showReasons(context, it) }
             binding.firstNameEdit.setText(it.firstName)
             binding.lastNameEdit.setText(it.lastName)
             binding.birthPlaceEdit.setText(it.birthPlace)
@@ -129,35 +128,32 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
         )
     }
 
-    private fun setupReason(reasonSpinner: Spinner, reasonIndex: Int?, context: Context) {
-        val reasonsList = MainViewModel.Reasons.values().toList()
-        ReasonsSpinnerAdapter(
-            context,
-            android.R.layout.simple_spinner_item,
-            reasonsList
-        ).also {
-            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            reasonSpinner.adapter = it
-        }
-
-        reasonSpinner.setSelection(if (reasonIndex != null && reasonIndex > -1 && reasonIndex < reasonsList.size) reasonIndex else 0)
-
-        reasonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) =
-                viewModel.update { it.copy(reason = null, reasonIndex = -1) }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) = viewModel.update {
-                it.copy(
-                    reason = reasonsList[position].keyword,
-                    reasonIndex = position
-                )
+    private fun showReasons(context: Context, values: MainData) {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.main_reason)
+            .setPositiveButton(R.string.positive) { dialog, _ -> dialog.dismiss() }
+            .setMultiChoiceItems(
+                MainViewModel.Reasons.values().map { context.getString(it.textRes) }.toTypedArray(),
+                MainViewModel.Reasons.values().map { values.reason.contains(it.keyword) }.toBooleanArray()
+            ) { _, which, isChecked ->
+                viewModel.update {
+                    val reasons = it.reason
+                    val reasonIndexes = it.reasonIndexes
+                    MainViewModel.Reasons.values()[which].keyword.let { keyword ->
+                        if (isChecked && !reasons.contains(keyword)) {
+                            reasons.add(keyword)
+                            reasonIndexes.add(which)
+                        }
+                        if (!isChecked && reasons.contains(keyword)) {
+                            reasons.remove(keyword)
+                            reasonIndexes.remove(which)
+                        }
+                    }
+                    it.copy(reason = reasons, reasonIndexes = reasonIndexes)
+                }
             }
-        }
+            .create()
+            .show()
     }
 
     private fun showDatePicker(
@@ -195,8 +191,8 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
             && !address.isNullOrBlank()
             && !city.isNullOrBlank()
             && !code.isNullOrBlank()
-            && !reason.isNullOrBlank()
-            && reasonIndex != -1
+            && !reason.isNullOrEmpty()
+            && !reasonIndexes.isNullOrEmpty()
             && !place.isNullOrBlank()
             && !date.isNullOrBlank()
             && !time.isNullOrBlank()
@@ -236,28 +232,4 @@ class CreationFragment : BaseFragment<FragmentCreationBinding, MainData, MainVie
     )
 
     private fun Int.numberTo2DigitString() = if (this < 10) "0$this" else toString()
-
-    private class ReasonsSpinnerAdapter(
-        context: Context, @LayoutRes layout: Int,
-        private val reasons: List<MainViewModel.Reasons>
-    ) : ArrayAdapter<MainViewModel.Reasons>(context, layout, reasons) {
-
-        override fun getCount() = reasons.size
-
-        override fun getItem(position: Int) = reasons[position]
-
-        override fun getItemId(position: Int) = position.toLong()
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view = super.getView(position, convertView, parent)
-            (view as? TextView)?.text = reasons[position].toReadableText(context)
-            return view
-        }
-
-        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view = super.getDropDownView(position, convertView, parent)
-            (view as? TextView)?.text = reasons[position].toReadableText(context)
-            return view
-        }
-    }
 }

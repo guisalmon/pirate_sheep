@@ -209,13 +209,13 @@
                     app:layout_constraintStart_toStartOf="@id/separator"
                     app:layout_constraintTop_toBottomOf="@id/city_edit" />
 
-                <Spinner
+                <Button
                     android:id="@+id/reason_edit"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/size_06"
+                    style="@style/Text.Edit"
+                    android:text="@string/main_reason"
                     app:layout_constraintEnd_toStartOf="@id/marginEnd"
                     app:layout_constraintStart_toStartOf="@id/separator"
-                    app:layout_constraintTop_toBottomOf="@+id/code_edit" />
+                    app:layout_constraintTop_toBottomOf="@+id/code_edit"/>
 
                 <EditText
                     android:id="@+id/place_edit"

@@ -16,8 +16,8 @@ data class MainData(
     val address: String? = null,
     val city: String? = null,
     val code: String? = null,
-    val reason: String? = null,
-    val reasonIndex: Int = -1,
+    val reason: MutableSet<String> = mutableSetOf(),
+    val reasonIndexes: MutableSet<Int> = mutableSetOf(),
     val place: String? = null,
     val date: String? = null,
     val time: String? = null,
@@ -36,8 +36,8 @@ data class MainData(
         private const val ADDRESS: String = "address"
         private const val CITY: String = "city"
         private const val CODE: String = "code"
-        private const val REASON: String = "reason"
-        private const val REASON_INDEX: String = "reasonIndex"
+        private const val REASON: String = "reasons"
+        private const val REASON_INDEX: String = "reasonIndexes"
         private const val PLACE: String = "place"
         private const val PATH_SET: String = "paths"
 
@@ -56,8 +56,8 @@ data class MainData(
                 .putString(ADDRESS, data.address)
                 .putString(CITY, data.city)
                 .putString(CODE, data.code)
-                .putString(REASON, data.reason)
-                .putInt(REASON_INDEX, data.reasonIndex)
+                .putStringSet(REASON, data.reason)
+                .putStringSet(REASON_INDEX, data.reasonIndexes.map { it.toString() }.toMutableSet())
                 .putString(PLACE, data.place)
                 .putStringSet(PATH_SET, data.pathSet)
                 .apply()
@@ -73,8 +73,8 @@ data class MainData(
                     it.getString(ADDRESS, null),
                     it.getString(CITY, null),
                     it.getString(CODE, null),
-                    it.getString(REASON, null),
-                    it.getInt(REASON_INDEX, -1),
+                    it.getStringSet(REASON, mutableSetOf())?.toMutableSet() ?: mutableSetOf(),
+                    it.getStringSet(REASON_INDEX, mutableSetOf())?.map { index -> index.toInt() }?.toMutableSet() ?: mutableSetOf(),
                     it.getString(PLACE, null),
                     null,
                     null,
